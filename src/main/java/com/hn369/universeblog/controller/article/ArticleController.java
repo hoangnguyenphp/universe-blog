@@ -1,4 +1,4 @@
-package com.hn369.universeblog.controller;
+package com.hn369.universeblog.controller.article;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
