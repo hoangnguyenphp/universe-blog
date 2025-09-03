@@ -6,6 +6,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.hn369.universeblog.dto.topic.TopicTranslationWriteRequestDto;
+import com.hn369.universeblog.dto.topic.TopicTranslationWriteResponseDto;
 import com.hn369.universeblog.dto.topic.TopicWriteRequestDto;
 import com.hn369.universeblog.dto.topic.TopicWriteResponseDto;
 import com.hn369.universeblog.service.topic.TopicService;
@@ -18,8 +20,14 @@ public class TopicController {
 	
 	@PostMapping("/topics")
 	public ResponseEntity<TopicWriteResponseDto> createTopic(@RequestBody TopicWriteRequestDto topicWriteRequestDto) {
-		TopicWriteResponseDto topicWriteResponseDto = topicService.saveTopic(topicWriteRequestDto);
+		TopicWriteResponseDto topicWriteResponseDto = topicService.createTopic(topicWriteRequestDto);
 		return ResponseEntity.ok(topicWriteResponseDto);
+	}
+	
+	@PostMapping("/topic_translations")
+	public ResponseEntity<TopicTranslationWriteResponseDto> createTopicTranslation(@RequestBody TopicTranslationWriteRequestDto topicTranslationWriteRequestDto) {
+		TopicTranslationWriteResponseDto topicTranslationWriteResponseDto = topicService.createTopicTranslation(topicTranslationWriteRequestDto);
+		return ResponseEntity.ok(topicTranslationWriteResponseDto);
 	}
 
 }

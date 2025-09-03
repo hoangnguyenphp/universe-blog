@@ -1,4 +1,4 @@
-package com.hn369.universeblog.entity.topic;
+package com.hn369.universeblog.service.entity.topic;
 
 import java.io.Serializable;
 import java.util.Objects;

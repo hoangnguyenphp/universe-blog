@@ -1,15 +1,15 @@
 package com.hn369.universeblog.dto.topic;
 
-public class TopicTranslationWriteDto {
+public class TopicTranslationWriteResponseDto {
     private String topic_uuid;
     private String language;
     private String topicName;
 
     // Constructors
-    public TopicTranslationWriteDto() {
+    public TopicTranslationWriteResponseDto() {
     }
 
-    public TopicTranslationWriteDto(String topic_uuid, String language, String topicName) {
+    public TopicTranslationWriteResponseDto(String topic_uuid, String language, String topicName) {
         this.topic_uuid = topic_uuid;
         this.language = language;
         this.topicName = topicName;

@@ -1,4 +1,4 @@
-package com.hn369.universeblog.entity.user;
+package com.hn369.universeblog.service.entity.user;
 
 
 import jakarta.persistence.*;

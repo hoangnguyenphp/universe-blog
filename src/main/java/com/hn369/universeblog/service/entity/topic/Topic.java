@@ -1,6 +1,6 @@
-package com.hn369.universeblog.entity.topic;
+package com.hn369.universeblog.service.entity.topic;
 
-import com.hn369.universeblog.entity.language.Language;
+import com.hn369.universeblog.service.entity.language.Language;
 
 import jakarta.persistence.*;
 

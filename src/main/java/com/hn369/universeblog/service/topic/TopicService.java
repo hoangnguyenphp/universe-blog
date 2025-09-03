@@ -3,53 +3,46 @@ package com.hn369.universeblog.service.topic;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.hn369.universeblog.dto.topic.TopicReadDto;
+import com.hn369.universeblog.dto.topic.TopicTranslationWriteRequestDto;
+import com.hn369.universeblog.dto.topic.TopicTranslationWriteResponseDto;
 import com.hn369.universeblog.dto.topic.TopicWriteRequestDto;
 import com.hn369.universeblog.dto.topic.TopicWriteResponseDto;
-import com.hn369.universeblog.entity.language.Language;
-import com.hn369.universeblog.entity.topic.Topic;
-import com.hn369.universeblog.entity.topic.TopicTranslation;
-import com.hn369.universeblog.entity.topic.TopicTranslationId;
-import com.hn369.universeblog.repository.topic.TopicRepository;
-import com.hn369.universeblog.repository.topic.TopicTranslationRepository;
-import com.hn369.universeblog.service.language.LanguageService;
-
-import java.util.UUID;
 
 @Service
 public class TopicService {
-	
+
 	@Autowired
-	private LanguageService languageService;
-	
+	private TopicRepositoryIfc topicRepositoryIfc;
+
 	@Autowired
-	private TopicRepository topicRepository;
-	
-	@Autowired
-	private TopicTranslationRepository topicTranslationRepository;
-	
-	public TopicWriteResponseDto saveTopic(TopicWriteRequestDto topicWriteDto) {
-		
-		Language defaultLanguage = languageService.retriveByLanguageCode(topicWriteDto.getDefaultLanguage());
-		
-		Topic topic = new Topic();
-		
-		topic.setTopicUuid(UUID.randomUUID().toString());
-		topic.setTopicName(topicWriteDto.getTopicName());
-		topic.setDefaultLanguage(defaultLanguage);
-		
-		topic = topicRepository.save(topic);
-		
-		TopicTranslation topicTranslation = new TopicTranslation();
-		
-		TopicTranslationId topicTranslationId = new TopicTranslationId(topic.getTopicUuid(), defaultLanguage.getCode());
-		
-		topicTranslation.setId(topicTranslationId);
-		topicTranslation.setTopicName(topic.getTopicName());
-		topicTranslationRepository.save(topicTranslation);
-		
-		TopicWriteResponseDto topicWriteResponseDto = new TopicWriteResponseDto(topic.getTopicId(), topic.getTopicUuid(),
-				topic.getTopicName(), topic.getDefaultLanguage().getName());
-		
+	private TopicTranslationRepositoryIfc topicTranslationRepositoryIfc;
+
+	public TopicWriteResponseDto createTopic(TopicWriteRequestDto topicWriteDto) {
+
+		TopicWriteResponseDto topicWriteResponseDto = topicRepositoryIfc.createTopic(topicWriteDto);
+
 		return topicWriteResponseDto;
+	}
+
+	public TopicTranslationWriteResponseDto createTopicTranslation(
+			TopicTranslationWriteRequestDto topicTranslationWriteRequestDto) {
+
+		TopicTranslationWriteResponseDto topicTranslationWriteResponseDto = new TopicTranslationWriteResponseDto();
+		try {
+			TopicReadDto masterTopic = topicRepositoryIfc.findByTopicUuid(topicTranslationWriteRequestDto.getTopic_uuid());
+			if (masterTopic == null) {
+				throw new Exception("The master topic does not exist.");
+			}
+
+			topicTranslationWriteResponseDto = topicTranslationRepositoryIfc
+					.createTopicTranslation(topicTranslationWriteRequestDto);
+
+		} catch (Exception e) {
+
+		}
+
+		return topicTranslationWriteResponseDto;
+
 	}
 }
