@@ -24,7 +24,7 @@ public class TopicController {
 		return ResponseEntity.ok(topicWriteResponseDto);
 	}
 	
-	@PostMapping("/topic_translations")
+	@PostMapping("/topic-translations")
 	public ResponseEntity<TopicTranslationWriteResponseDto> createTopicTranslation(@RequestBody TopicTranslationWriteRequestDto topicTranslationWriteRequestDto) {
 		TopicTranslationWriteResponseDto topicTranslationWriteResponseDto = topicService.createTopicTranslation(topicTranslationWriteRequestDto);
 		return ResponseEntity.ok(topicTranslationWriteResponseDto);
