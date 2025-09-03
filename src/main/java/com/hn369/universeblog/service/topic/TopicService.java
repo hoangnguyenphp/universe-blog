@@ -8,6 +8,7 @@ import com.hn369.universeblog.dto.topic.TopicTranslationWriteRequestDto;
 import com.hn369.universeblog.dto.topic.TopicTranslationWriteResponseDto;
 import com.hn369.universeblog.dto.topic.TopicWriteRequestDto;
 import com.hn369.universeblog.dto.topic.TopicWriteResponseDto;
+import com.hn369.universeblog.service.entity.topic.TopicTranslation;
 
 @Service
 public class TopicService {
@@ -34,12 +35,18 @@ public class TopicService {
 			if (masterTopic == null) {
 				throw new Exception("The master topic does not exist.");
 			}
+			
+			TopicTranslation topicTranslation  = topicTranslationRepositoryIfc.findByTopicUuidAndLanguageCode(topicTranslationWriteRequestDto.getTopic_uuid(), topicTranslationWriteRequestDto.getLanguage());
+			
+			if (topicTranslation != null) {
+				throw new Exception("The topic for " + topicTranslationWriteRequestDto.getLanguage() + " is already existed.");
+			}
 
 			topicTranslationWriteResponseDto = topicTranslationRepositoryIfc
 					.createTopicTranslation(topicTranslationWriteRequestDto);
 
 		} catch (Exception e) {
-
+			System.out.println(e.getMessage());
 		}
 
 		return topicTranslationWriteResponseDto;

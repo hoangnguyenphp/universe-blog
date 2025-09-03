@@ -40,5 +40,11 @@ public class TopicTranslationRepositoryImpl implements TopicTranslationRepositor
 
 		return topicTranslationWriteResponseDto;
 	}
+	
+	@Override
+	public TopicTranslation findByTopicUuidAndLanguageCode(String topicUuid, String languageCode) {
+		TopicTranslation topicTranslation = topicTranslationRepository.findById(new TopicTranslationId(topicUuid, languageCode)).orElse(null);
+		return topicTranslation;
+	}
 
 }
