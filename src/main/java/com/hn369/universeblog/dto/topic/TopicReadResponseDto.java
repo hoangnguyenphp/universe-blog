@@ -1,6 +1,6 @@
 package com.hn369.universeblog.dto.topic;
 
-public class TopicReadDto {
+public class TopicReadResponseDto {
 
     private Long topicId;
 
@@ -11,9 +11,9 @@ public class TopicReadDto {
     private String defaultLanguage;
 
     // --- Constructors ---
-    public TopicReadDto() {}
+    public TopicReadResponseDto() {}
 
-    public TopicReadDto(String topicUuid, String topicName, String defaultLanguage) {
+    public TopicReadResponseDto(String topicUuid, String topicName, String defaultLanguage) {
         this.topicUuid = topicUuid;
         this.topicName = topicName;
         this.defaultLanguage = defaultLanguage;

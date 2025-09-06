@@ -1,12 +1,10 @@
 package com.hn369.universeblog.service.topic;
 
-import com.hn369.universeblog.dto.topic.TopicReadDto;
-import com.hn369.universeblog.dto.topic.TopicWriteRequestDto;
-import com.hn369.universeblog.dto.topic.TopicWriteResponseDto;
+import com.hn369.universeblog.service.entity.topic.Topic;
 
 public interface TopicRepositoryIfc {
-	TopicWriteResponseDto createTopic(TopicWriteRequestDto topicWriteDto);
+	Topic saveTopic(Topic topic);
 
-	TopicReadDto findByTopicUuid(String topicUuid);
+	Topic findByTopicUuid(String topicUuid);
 
 }

@@ -6,13 +6,14 @@ import org.springframework.stereotype.Service;
 import com.hn369.universeblog.dto.article.ArticleCreationRequestDto;
 import com.hn369.universeblog.dto.article.ArticleCreationResponseDto;
 import com.hn369.universeblog.dto.article.ArticleReadResponseDto;
-import com.hn369.universeblog.dto.topic.TopicReadDto;
+import com.hn369.universeblog.dto.topic.TopicReadResponseDto;
 import com.hn369.universeblog.service.articletopic.ArticleTopicRepositoryIfc;
 import com.hn369.universeblog.service.entity.article.Article;
 import com.hn369.universeblog.service.entity.article.ArticleTranslation;
 import com.hn369.universeblog.service.entity.articletopic.ArticleTopic;
 import com.hn369.universeblog.service.entity.language.Language;
 import com.hn369.universeblog.service.entity.serialarticle.SerialArticle;
+import com.hn369.universeblog.service.entity.topic.Topic;
 import com.hn369.universeblog.service.language.LanguageRepositoryIfc;
 import com.hn369.universeblog.service.serialarticle.SerialArticleRepositoryIfc;
 import com.hn369.universeblog.service.topic.TopicRepositoryIfc;
@@ -57,7 +58,7 @@ public class ArticleService {
 			newArticle = articleRepository.createArticle(newArticle);
 
 			// Save article_topic
-			TopicReadDto masterTopic = topicRepository.findByTopicUuid(articleCreationRequestDto.getMasterTopicUuid());
+			Topic masterTopic = topicRepository.findByTopicUuid(articleCreationRequestDto.getMasterTopicUuid());
 
 			ArticleTopic newArticleTopic = new ArticleTopic();
 			newArticleTopic.setArticleUuid(newArticle.getArticleUuid());
