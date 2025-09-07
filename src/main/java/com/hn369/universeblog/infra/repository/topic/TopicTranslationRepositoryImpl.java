@@ -30,8 +30,8 @@ public class TopicTranslationRepositoryImpl implements TopicTranslationRepositor
 
 	@Override
 	public List<TopicTranslation> findByLanguageCode(String languageCode) {
-		// TODO Auto-generated method stub
-		return null;
+		List<TopicTranslation> topicTranslationList = topicTranslationJpaRepository.findByLanguageCode(languageCode);
+		return topicTranslationList;
 	}
 
 }

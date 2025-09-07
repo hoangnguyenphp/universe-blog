@@ -3,16 +3,9 @@ package com.hn369.universeblog.service.entity.topic;
 import java.io.Serializable;
 import java.util.Objects;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Embeddable;
-
-@Embeddable
 public class TopicTranslationId implements Serializable {
-
-    @Column(name = "topic_uuid", length = 100, nullable = false)
     private String topicUuid;
 
-    @Column(name = "language_code", length = 50, nullable = false)
     private String languageCode;
 
     public TopicTranslationId() {

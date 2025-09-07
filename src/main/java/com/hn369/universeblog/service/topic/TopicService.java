@@ -44,9 +44,8 @@ public class TopicService {
 
 		TopicTranslation topicTranslation = new TopicTranslation();
 
-		TopicTranslationId topicTranslationId = new TopicTranslationId(topic.getTopicUuid(), defaultLanguage.getCode());
-
-		topicTranslation.setId(topicTranslationId);
+		topicTranslation.setTopicUuid(topic.getTopicUuid());
+		topicTranslation.setLanguageCode(defaultLanguage.getCode());
 		topicTranslation.setTopicName(topic.getTopicName());
 		topicTranslationRepository.saveTopicTranslation(topicTranslation);
 
@@ -61,18 +60,15 @@ public class TopicService {
 			TopicTranslationWriteRequestDto topicTranslationWriteRequestDto) {
 		TopicTranslation topicTranslation = new TopicTranslation();
 
-		TopicTranslationId topicTranslationId = new TopicTranslationId();
-		topicTranslationId.setTopicUuid(topicTranslationWriteRequestDto.getTopic_uuid());
-		topicTranslationId.setLanguageCode(topicTranslationWriteRequestDto.getLanguage());
-
-		topicTranslation.setId(topicTranslationId);
+		topicTranslation.setTopicUuid(topicTranslationWriteRequestDto.getTopic_uuid());
+		topicTranslation.setLanguageCode(topicTranslationWriteRequestDto.getLanguage());
 		topicTranslation.setTopicName(topicTranslationWriteRequestDto.getTopicName());
 
 		topicTranslation = topicTranslationRepository.saveTopicTranslation(topicTranslation);
 
 		TopicTranslationWriteResponseDto topicTranslationWriteResponseDto = new TopicTranslationWriteResponseDto();
-		topicTranslationWriteResponseDto.setTopic_uuid(topicTranslation.getId().getTopicUuid());
-		topicTranslationWriteResponseDto.setLanguage(topicTranslation.getId().getLanguageCode());
+		topicTranslationWriteResponseDto.setTopic_uuid(topicTranslation.getTopicUuid());
+		topicTranslationWriteResponseDto.setLanguage(topicTranslation.getLanguageCode());
 		topicTranslationWriteResponseDto.setTopicName(topicTranslation.getTopicName());
 
 		return topicTranslationWriteResponseDto;
