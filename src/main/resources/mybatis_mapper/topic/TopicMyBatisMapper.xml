@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.hn369.universeblog.infra.repository.mybatis.topic.TopicMyBatisMapper">
+
+    <resultMap id="TopicByLanguageResultMap" type="com.hn369.universeblog.dto.topic.TopicByLanguageReadResponseDto">
+        <id property="topicUuid" column="topic_uuid"/>
+        <result property="topicName" column="topic_name"/>
+        <result property="languageCode" column="language_code"/>
+        <result property="languageName" column="language_name"/>
+    </resultMap>
+
+    <select id="findAllTopicsByLanguageCode" resultMap="TopicByLanguageResultMap">
+        select t.topic_uuid, tt.topic_name, l.language_code, l.language_name
+        from topic t
+        join topic_translation tt on t.topic_uuid = tt.topic_uuid
+        join language l on tt.language_code = l.language_code
+        where tt.language_code = #{languageCode}
+    </select>
+
+</mapper>

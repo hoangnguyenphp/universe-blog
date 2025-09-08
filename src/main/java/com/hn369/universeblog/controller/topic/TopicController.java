@@ -1,11 +1,16 @@
 package com.hn369.universeblog.controller.topic;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.hn369.universeblog.dto.topic.TopicByLanguageReadResponseDto;
 import com.hn369.universeblog.dto.topic.TopicTranslationWriteRequestDto;
 import com.hn369.universeblog.dto.topic.TopicTranslationWriteResponseDto;
 import com.hn369.universeblog.dto.topic.TopicWriteRequestDto;
@@ -28,6 +33,12 @@ public class TopicController {
 	public ResponseEntity<TopicTranslationWriteResponseDto> createTopicTranslation(@RequestBody TopicTranslationWriteRequestDto topicTranslationWriteRequestDto) {
 		TopicTranslationWriteResponseDto topicTranslationWriteResponseDto = topicService.createTopicTranslation(topicTranslationWriteRequestDto);
 		return ResponseEntity.ok(topicTranslationWriteResponseDto);
+	}
+	
+	@GetMapping("/topics/{languageCode}")
+	ResponseEntity<List<TopicByLanguageReadResponseDto>> retrieveTopicsByLanguageCode(@PathVariable String languageCode) {
+		List<TopicByLanguageReadResponseDto> topicList = topicService.retrieveTopicsByLanguageCode(languageCode);
+		return ResponseEntity.ok(topicList);
 	}
 
 }

@@ -1,10 +1,13 @@
 package com.hn369.universeblog.service.topic;
 
+import java.util.List;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
 
+import com.hn369.universeblog.dto.topic.TopicByLanguageReadResponseDto;
 import com.hn369.universeblog.dto.topic.TopicTranslationWriteRequestDto;
 import com.hn369.universeblog.dto.topic.TopicTranslationWriteResponseDto;
 import com.hn369.universeblog.dto.topic.TopicWriteRequestDto;
@@ -73,5 +76,10 @@ public class TopicService {
 
 		return topicTranslationWriteResponseDto;
 
+	}
+	
+	public  List<TopicByLanguageReadResponseDto> retrieveTopicsByLanguageCode(@PathVariable String languageCode) {
+		List<TopicByLanguageReadResponseDto> topicList = topicRepository.retrieveTopicsByLanguageCode(languageCode);
+		return topicList;
 	}
 }

@@ -6,7 +6,6 @@ import org.springframework.stereotype.Service;
 import com.hn369.universeblog.dto.article.ArticleCreationRequestDto;
 import com.hn369.universeblog.dto.article.ArticleCreationResponseDto;
 import com.hn369.universeblog.dto.article.ArticleReadResponseDto;
-import com.hn369.universeblog.dto.topic.TopicReadResponseDto;
 import com.hn369.universeblog.service.articletopic.ArticleTopicRepositoryIfc;
 import com.hn369.universeblog.service.entity.article.Article;
 import com.hn369.universeblog.service.entity.article.ArticleTranslation;
