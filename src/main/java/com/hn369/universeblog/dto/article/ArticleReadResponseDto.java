@@ -12,6 +12,12 @@ public class ArticleReadResponseDto {
 
     private String masterTopic;
     
+    private String masterTopicUuid;
+    
+    private String languageCode;
+    
+    private String languageName;
+    
     private List<String> relatedTopics;
     
     private String serialArticle;
@@ -55,9 +61,33 @@ public class ArticleReadResponseDto {
 	public String getMasterTopic() {
 		return masterTopic;
 	}
-
+	
 	public void setMasterTopic(String masterTopic) {
 		this.masterTopic = masterTopic;
+	}
+	
+	public String getMasterTopicUuid() {
+		return masterTopicUuid;
+	}
+
+	public void setMasterTopicUuid(String masterTopicUuid) {
+		this.masterTopicUuid = masterTopicUuid;
+	}
+
+	public String getLanguageCode() {
+		return languageCode;
+	}
+
+	public void setLanguageCode(String languageCode) {
+		this.languageCode = languageCode;
+	}
+
+	public String getLanguageName() {
+		return languageName;
+	}
+
+	public void setLanguageName(String languageName) {
+		this.languageName = languageName;
 	}
 
 	public List<String> getRelatedTopics() {

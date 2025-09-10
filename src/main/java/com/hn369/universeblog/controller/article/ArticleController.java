@@ -1,5 +1,7 @@
 package com.hn369.universeblog.controller.article;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -35,6 +37,12 @@ public class ArticleController {
 	public ResponseEntity<ArticleReadResponseDto> getArticle(@PathVariable String articleUuid) {
 		ArticleReadResponseDto articleReadResponseDto = articleService.retrieveArticle(articleUuid);
 		return ResponseEntity.ok(articleReadResponseDto);
+	}
+	
+	@GetMapping("/articles/single-articles-by-topic-language/{topicUuid}/{languageCode}")
+	public ResponseEntity<List<ArticleReadResponseDto>> getSingleArticlesByTopicAndLanguage (@PathVariable String topicUuid, @PathVariable String languageCode) {
+		List<ArticleReadResponseDto> articleList = articleService.getSingleArticlesByTopicAndLanguage(topicUuid, languageCode);
+		return ResponseEntity.ok(articleList);
 	}
 
 }

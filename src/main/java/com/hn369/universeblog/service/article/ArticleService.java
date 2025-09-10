@@ -1,6 +1,9 @@
 package com.hn369.universeblog.service.article;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.hn369.universeblog.dto.article.ArticleCreationRequestDto;
@@ -103,6 +106,12 @@ public class ArticleService {
 		
 		
 		return articleReadResponseDto;
+	}
+	
+	public List<ArticleReadResponseDto> getSingleArticlesByTopicAndLanguage(String topicUuid, String languageCode) {
+		List<ArticleReadResponseDto> articleList = articleRepository.getSingleArticlesByTopicAndLanguage(topicUuid, languageCode);
+		return articleList;
+		
 	}
 
 }
