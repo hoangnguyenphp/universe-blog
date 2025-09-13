@@ -33,6 +33,8 @@ public class ArticleReadResponseDto {
     private String createdUser;
 
     private String updatedUser;
+    
+    private String sourceReference;
 
 	public String getArticleUuid() {
 		return articleUuid;
@@ -153,5 +155,12 @@ public class ArticleReadResponseDto {
 	public void setUpdatedUser(String updatedUser) {
 		this.updatedUser = updatedUser;
 	}
-    
+
+	public String getSourceReference() {
+		return sourceReference;
+	}
+
+	public void setSourceReference(String sourceReference) {
+		this.sourceReference = sourceReference;
+	}
 }

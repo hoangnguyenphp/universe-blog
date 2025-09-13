@@ -9,4 +9,6 @@ import com.hn369.universeblog.dto.article.ArticleReadResponseDto;
 @Mapper
 public interface ArticleMyBatisMapper {
 	List<ArticleReadResponseDto> findSingleArticlesByTopicAndLanguage(String topicUuid, String languageCode);
+	List<ArticleReadResponseDto> retrieveHotArticles(Integer quantity, String languageCode);
+	ArticleReadResponseDto retrieveArticleByUuidAndLanguage(String articleUuid, String languageCode);
 }

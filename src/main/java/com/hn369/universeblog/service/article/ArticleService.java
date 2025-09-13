@@ -103,8 +103,11 @@ public class ArticleService {
 		articleReadResponseDto.setArticleUuid(article.getArticleUuid());
 		articleReadResponseDto.setArticleName(article.getArticleName());
 		articleReadResponseDto.setArticleContent(article.getArticleContent());
-		
-		
+		return articleReadResponseDto;
+	}
+	
+	public ArticleReadResponseDto retrieveArticleByUuidAndLanguage(String articleUuid, String languageCode) {
+		ArticleReadResponseDto articleReadResponseDto = articleRepository.retrieveArticleByUuidAndLanguage(articleUuid, languageCode);
 		return articleReadResponseDto;
 	}
 	
@@ -112,6 +115,11 @@ public class ArticleService {
 		List<ArticleReadResponseDto> articleList = articleRepository.getSingleArticlesByTopicAndLanguage(topicUuid, languageCode);
 		return articleList;
 		
+	}
+	
+	public List<ArticleReadResponseDto> getHotArticles(Integer quantity, String languageCode) {
+		List<ArticleReadResponseDto> hotArticles = articleRepository.retrieveHotArticles(quantity, languageCode);
+		return hotArticles;
 	}
 
 }

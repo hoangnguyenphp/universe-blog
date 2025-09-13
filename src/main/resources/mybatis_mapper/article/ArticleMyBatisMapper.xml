@@ -4,20 +4,24 @@
 
 <mapper namespace="com.hn369.universeblog.infra.repository.article.ArticleMyBatisMapper">
 
-    <resultMap id="SingleArticlesByTopicAndLanguageMap" type="com.hn369.universeblog.dto.article.ArticleReadResponseDto">
+    <resultMap id="ArticleMapper" type="com.hn369.universeblog.dto.article.ArticleReadResponseDto">
         <id property="articleUuid" column="article_uuid"/>
         <result property="articleName" column="article_name"/>
         <result property="articleContent" column="article_content"/>
         <result property="createdUser" column="created_user"/>
         <result property="updatedUser" column="updated_user"/>
+        <result property="createdUser" column="created_user"/>
         <result property="masterTopic" column="topic_name"/>
         <result property="masterTopicUuid" column="topic_uuid"/>
         <result property="languageCode" column="language_code"/>
         <result property="languageName" column="language_name"/>
         <result property="viewCounter" column="view_counter"/>
+        <result property="sourceReference" column="source_reference"/>
+        <result property="dateCreated" column="date_created"/>
+        <result property="dateUpdated" column="date_updated"/>
     </resultMap>
 
-    <select id="findSingleArticlesByTopicAndLanguage" resultMap="SingleArticlesByTopicAndLanguageMap">
+    <select id="findSingleArticlesByTopicAndLanguage" resultMap="ArticleMapper">
 		select at.article_uuid, at.article_name, at.article_content, at.created_user, 
 			   at.updated_user, tt.topic_name, tt.topic_uuid, l.language_code, l.language_name,
 			   a.view_counter
@@ -31,6 +35,30 @@
 			  and at.language_code in ('int', #{languageCode})
 			  and tt.language_code in ('int', #{languageCode})
 			  and at.serial_article_uuid is null
+    </select>
+    
+    
+	<select id="retrieveHotArticles" resultMap="ArticleMapper">
+		select at.article_uuid, at.article_name, at.article_content, at.created_user, 
+			   at.updated_user, tt.topic_name, tt.topic_uuid, l.language_code, l.language_name,
+			   a.view_counter
+		from article a join article_translation at on a.article_uuid = at.article_uuid
+			  join article_topic atp on a.article_uuid = atp.article_uuid
+			  join topic t on t.topic_uuid = atp.topic_uuid
+			  join topic_translation tt on t.topic_uuid = tt.topic_uuid
+			  join language l on at.language_code = l.language_code
+		where atp.topic_uuid = #{topicUuid}
+			  and atp.matter_topic = true
+			  and at.language_code in ('int', #{languageCode})
+			  and tt.language_code in ('int', #{languageCode})
+	    order by a.view_counter desc
+	    limit #{quantity}
+    </select>
+	<select id="retrieveArticleByUuidAndLanguage" resultMap="ArticleMapper">
+		select article_uuid, article_name, article_content,  date_created, date_updated, 
+			   created_user, updated_user, source_reference, chapter_id, l.language_code, l.language_name
+		from article_translation at join language l on at.language_code = l.language_code
+		where article_uuid = #{articleUuid} and at.language_code in (#{languageCode}, 'int')
     </select>
 
 </mapper>

@@ -39,9 +39,22 @@ public class ArticleController {
 		return ResponseEntity.ok(articleReadResponseDto);
 	}
 	
+	@GetMapping("/articles/{articleUuid}/{languageCode}")
+	public ResponseEntity<ArticleReadResponseDto> retrieveArticleByUuidAndLanguage(@PathVariable String articleUuid, @PathVariable String languageCode) {
+		ArticleReadResponseDto articleReadResponseDto = articleService.retrieveArticleByUuidAndLanguage(articleUuid, languageCode);
+		return ResponseEntity.ok(articleReadResponseDto);
+	}
+	
 	@GetMapping("/articles/single-articles-by-topic-language/{topicUuid}/{languageCode}")
 	public ResponseEntity<List<ArticleReadResponseDto>> getSingleArticlesByTopicAndLanguage (@PathVariable String topicUuid, @PathVariable String languageCode) {
 		List<ArticleReadResponseDto> articleList = articleService.getSingleArticlesByTopicAndLanguage(topicUuid, languageCode);
+		return ResponseEntity.ok(articleList);
+	}
+	
+	
+	@GetMapping("/articles/hot-articles/{quantity}/{languageCode}")
+	public ResponseEntity<List<ArticleReadResponseDto>> getHotArticles (@PathVariable Integer quantity, @PathVariable String languageCode) {
+		List<ArticleReadResponseDto> articleList = articleService.getHotArticles(quantity, languageCode);
 		return ResponseEntity.ok(articleList);
 	}
 

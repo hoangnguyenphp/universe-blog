@@ -17,6 +17,9 @@ public class ArticleRepositoryImpl implements ArticleRepositoryIfc {
 	
 	@Autowired
 	private ArticleMyBatisMapper articleMyBatisMapper;
+	
+	@Autowired
+	private ArticleTranslationJpaRepository articleTranslationJpaRepository;
 
 	@Override
 	public Article createArticle(Article rawArticle) {
@@ -24,10 +27,18 @@ public class ArticleRepositoryImpl implements ArticleRepositoryIfc {
 		return newArticle;
 	}
 	
+	@Override
 	public Article retrieveArticle(String articleUuid) {
 		Article article = articleJpaRepository.findByArticleUuid(articleUuid);
 		return article;
 	}
+	
+	@Override
+	public ArticleReadResponseDto retrieveArticleByUuidAndLanguage(String articleUuid, String languageCode) {
+		ArticleReadResponseDto articleReadResponseDto = articleMyBatisMapper.retrieveArticleByUuidAndLanguage(articleUuid, languageCode);
+		return articleReadResponseDto;
+	}
+	
 
 	@Override
 	public List<ArticleReadResponseDto> getSingleArticlesByTopicAndLanguage(String topicUuid, String languageCode) {
@@ -35,6 +46,11 @@ public class ArticleRepositoryImpl implements ArticleRepositoryIfc {
 		return articleList;
 	}
 	
+	@Override
+	public List<ArticleReadResponseDto> retrieveHotArticles(Integer quantity, String languageCode) {
+		List<ArticleReadResponseDto> hotArticles = articleMyBatisMapper.retrieveHotArticles(quantity, languageCode);
+		return hotArticles;
+	}
 	
 
 }
