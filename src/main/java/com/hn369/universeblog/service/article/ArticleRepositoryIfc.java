@@ -14,7 +14,7 @@ public interface ArticleRepositoryIfc {
 	
 	ArticleReadResponseDto retrieveArticleByUuidAndLanguage(String articleUuid, String languageCode);
 	
-	List<ArticleReadResponseDto> getSingleArticlesByTopicAndLanguage(String topicUuid, String languageCode);
+	List<ArticleReadResponseDto> getSingleArticlesByTopicAndLanguage(String topicUuid, String languageCode, Integer quantity);
 	
 	List<ArticleReadResponseDto> retrieveHotArticles(Integer quantity, String languageCode);
 	

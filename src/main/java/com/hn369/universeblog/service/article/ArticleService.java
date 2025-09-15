@@ -119,8 +119,8 @@ public class ArticleService {
 		return articleReadResponseDto;
 	}
 	
-	public List<ArticleReadResponseDto> getSingleArticlesByTopicAndLanguage(String topicUuid, String languageCode) {
-		List<ArticleReadResponseDto> articleList = articleRepository.getSingleArticlesByTopicAndLanguage(topicUuid, languageCode);
+	public List<ArticleReadResponseDto> getSingleArticlesByTopicAndLanguage(String topicUuid, String languageCode, Integer quantity) {
+		List<ArticleReadResponseDto> articleList = articleRepository.getSingleArticlesByTopicAndLanguage(topicUuid, languageCode, quantity);
 		return articleList;
 		
 	}

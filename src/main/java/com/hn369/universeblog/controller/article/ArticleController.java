@@ -1,6 +1,7 @@
 package com.hn369.universeblog.controller.article;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -8,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.hn369.universeblog.dto.article.ArticleCreationRequestDto;
@@ -46,8 +48,11 @@ public class ArticleController {
 	}
 	
 	@GetMapping("/articles/single-articles-by-topic-language/{topicUuid}/{languageCode}")
-	public ResponseEntity<List<ArticleReadResponseDto>> getSingleArticlesByTopicAndLanguage (@PathVariable String topicUuid, @PathVariable String languageCode) {
-		List<ArticleReadResponseDto> articleList = articleService.getSingleArticlesByTopicAndLanguage(topicUuid, languageCode);
+	public ResponseEntity<List<ArticleReadResponseDto>> getSingleArticlesByTopicAndLanguage (@PathVariable String topicUuid, 
+																							 @PathVariable String languageCode,
+																							 @RequestParam Map<String, String> allParams) {
+		Integer quantity = (allParams != null && allParams.size() > 0) ? Integer.valueOf(allParams.get("quantity")) : null;
+		List<ArticleReadResponseDto> articleList = articleService.getSingleArticlesByTopicAndLanguage(topicUuid, languageCode, quantity);
 		return ResponseEntity.ok(articleList);
 	}
 	

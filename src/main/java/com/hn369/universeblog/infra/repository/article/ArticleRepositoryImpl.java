@@ -46,8 +46,8 @@ public class ArticleRepositoryImpl implements ArticleRepositoryIfc {
 	
 
 	@Override
-	public List<ArticleReadResponseDto> getSingleArticlesByTopicAndLanguage(String topicUuid, String languageCode) {
-		List<ArticleReadResponseDto> articleList = articleMyBatisMapper.findSingleArticlesByTopicAndLanguage(topicUuid, languageCode);
+	public List<ArticleReadResponseDto> getSingleArticlesByTopicAndLanguage(String topicUuid, String languageCode, Integer quantity) {
+		List<ArticleReadResponseDto> articleList = articleMyBatisMapper.findSingleArticlesByTopicAndLanguage(topicUuid, languageCode, quantity);
 		return articleList;
 	}
 	

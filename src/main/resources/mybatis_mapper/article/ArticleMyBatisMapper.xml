@@ -23,21 +23,43 @@
         <result property="chapterId" column="chapter_id"/>
     </resultMap>
 
-    <select id="findSingleArticlesByTopicAndLanguage" resultMap="ArticleMapper">
-		select at.article_uuid, at.article_name, at.article_content, at.created_user, 
-			   at.updated_user, at.serial_article_uuid, tt.topic_name, tt.topic_uuid, l.language_code, l.language_name,
-			   a.view_counter
-		from article a join article_translation at on a.article_uuid = at.article_uuid
-			  join article_topic atp on a.article_uuid = atp.article_uuid
-			  join topic t on t.topic_uuid = atp.topic_uuid
-			  join topic_translation tt on t.topic_uuid = tt.topic_uuid
-			  join language l on at.language_code = l.language_code
-		where atp.topic_uuid = #{topicUuid}
-			  and atp.matter_topic = true
-			  and at.language_code in ('int', #{languageCode})
-			  and tt.language_code in ('int', #{languageCode})
-			  and at.serial_article_uuid is null
-    </select>
+	<select id="findSingleArticlesByTopicAndLanguage" resultMap="ArticleMapper">
+	    SELECT 
+	        at.article_uuid, 
+	        at.article_name, 
+	        at.article_content, 
+	        at.created_user, 
+	        at.updated_user, 
+	        at.serial_article_uuid, 
+	        tt.topic_name, 
+	        tt.topic_uuid, 
+	        l.language_code, 
+	        l.language_name,
+	        a.view_counter,
+	        -- Priority for language matching (exact match first)
+	        CASE 
+	            WHEN at.language_code = #{languageCode} THEN 1 
+	            ELSE 2 
+	        END AS language_priority
+	    FROM article a 
+	    JOIN article_translation at ON a.article_uuid = at.article_uuid
+	    JOIN article_topic atp ON a.article_uuid = atp.article_uuid
+	    JOIN topic t ON t.topic_uuid = atp.topic_uuid
+	    JOIN topic_translation tt ON t.topic_uuid = tt.topic_uuid
+	    JOIN language l ON at.language_code = l.language_code
+	    WHERE atp.topic_uuid = #{topicUuid}
+	    AND atp.matter_topic = true
+	    AND at.language_code IN ('int', #{languageCode})
+	    AND tt.language_code IN ('int', #{languageCode})
+	    AND at.serial_article_uuid IS NULL
+	    ORDER BY 
+	        language_priority ASC,  -- Exact language matches first
+	        a.view_counter DESC,    -- Then by popularity
+	        at.date_updated DESC    -- Then by recency
+	    <if test="quantity != null and quantity > 0">
+	        LIMIT #{quantity}
+	    </if>
+	</select>
     
 	<select id="retrieveHotArticles" resultMap="ArticleMapper">
 		select at.article_uuid, at.article_name, at.article_content, at.created_user, 
@@ -48,8 +70,7 @@
 			  join topic t on t.topic_uuid = atp.topic_uuid
 			  join topic_translation tt on t.topic_uuid = tt.topic_uuid
 			  join language l on at.language_code = l.language_code
-		where atp.topic_uuid = #{topicUuid}
-			  and atp.matter_topic = true
+		where atp.matter_topic = true
 			  and at.language_code in ('int', #{languageCode})
 			  and tt.language_code in ('int', #{languageCode})
 	    order by a.view_counter desc
