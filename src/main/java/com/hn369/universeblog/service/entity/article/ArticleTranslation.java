@@ -41,6 +41,9 @@ public class ArticleTranslation {
 
     @Column(name = "updated_user", length = 100)
     private String updatedUser;
+    
+    @Column(name="chapter_id")
+    private Integer chapterId;
 
     // Getters and Setters
     public String getArticleUuid() {
@@ -83,7 +86,15 @@ public class ArticleTranslation {
         this.serialArticleUuid = serialArticleUuid;
     }
 
-    public LocalDateTime getDateCreated() {
+    public Integer getChapterId() {
+		return chapterId;
+	}
+
+	public void setChapterId(Integer chapterId) {
+		this.chapterId = chapterId;
+	}
+
+	public LocalDateTime getDateCreated() {
         return dateCreated;
     }
 

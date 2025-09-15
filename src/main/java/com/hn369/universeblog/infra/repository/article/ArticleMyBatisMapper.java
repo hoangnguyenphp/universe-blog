@@ -11,4 +11,5 @@ public interface ArticleMyBatisMapper {
 	List<ArticleReadResponseDto> findSingleArticlesByTopicAndLanguage(String topicUuid, String languageCode);
 	List<ArticleReadResponseDto> retrieveHotArticles(Integer quantity, String languageCode);
 	ArticleReadResponseDto retrieveArticleByUuidAndLanguage(String articleUuid, String languageCode);
+	ArticleReadResponseDto findBySerialArticleAndChapterIdAndLanguage(String serialArticleUuid, Integer chapterId, String languageCode);
 }

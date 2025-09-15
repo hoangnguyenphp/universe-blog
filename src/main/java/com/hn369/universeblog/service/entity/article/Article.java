@@ -57,6 +57,9 @@ public class Article implements Serializable {
 
     @Column(name = "updated_user", length = 100)
     private String updatedUser;
+    
+    @Column(name = "chapter_id")
+    private Integer chapterId;
 
     // Constructors
     public Article() {
@@ -104,7 +107,15 @@ public class Article implements Serializable {
         this.serialArticle = serialArticle;
     }
 
-    public Integer getViewCounter() {
+    public Integer getChapterId() {
+		return chapterId;
+	}
+
+	public void setChapterId(Integer chapterId) {
+		this.chapterId = chapterId;
+	}
+
+	public Integer getViewCounter() {
         return viewCounter;
     }
 

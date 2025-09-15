@@ -24,6 +24,8 @@ public class ArticleCreationRequestDto {
     private String createdUser;
 
     private String updatedUser;
+    
+    private Integer viewCounter;
 
 	public String getArticleName() {
 		return articleName;
@@ -103,5 +105,13 @@ public class ArticleCreationRequestDto {
 
 	public void setUpdatedUser(String updatedUser) {
 		this.updatedUser = updatedUser;
+	}
+
+	public Integer getViewCounter() {
+		return viewCounter;
+	}
+
+	public void setViewCounter(Integer viewCounter) {
+		this.viewCounter = viewCounter;
 	}
 }

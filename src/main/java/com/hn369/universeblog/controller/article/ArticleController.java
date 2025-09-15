@@ -57,5 +57,16 @@ public class ArticleController {
 		List<ArticleReadResponseDto> articleList = articleService.getHotArticles(quantity, languageCode);
 		return ResponseEntity.ok(articleList);
 	}
+	
+	/**
+	 * Get a serial article by serial article uuid, chapter id and language code
+	 */
+	@GetMapping("/articles/article-by-serial-article-chapter-language/{serialArticleUuid}/{chapterId}/{languageCode}")
+	public ResponseEntity<ArticleReadResponseDto> getBySerialArticleAndChapterIdAndLanguage(@PathVariable String serialArticleUuid, @PathVariable Integer chapterId,
+																							@PathVariable String languageCode) {
+		ArticleReadResponseDto articleReadResponseDto = articleService.retrieveBySerialArticleAndChapterIdAndLanguage(serialArticleUuid, chapterId, languageCode);
+		return ResponseEntity.ok(articleReadResponseDto);
+		
+	}
 
 }

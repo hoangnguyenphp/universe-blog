@@ -50,13 +50,20 @@ public class ArticleService {
 			SerialArticle serialArticle = serialArticleRepository
 					.findByUuid(articleCreationRequestDto.getSerialArticleUuid());
 			Language defaultLanguage = languageRepository.findByCode(articleCreationRequestDto.getDefaultLanguage());
+			
+			Integer currentChapter = null;
 
 			// Create new article
 			Article newArticle = new Article();
 			newArticle.setArticleName(articleCreationRequestDto.getArticleName());
 			newArticle.setArticleContent(articleCreationRequestDto.getArticleContent());
 			newArticle.setSerialArticle(serialArticle);
+			newArticle.setViewCounter(articleCreationRequestDto.getViewCounter());
 			newArticle.setDefaultLanguage(defaultLanguage);
+			if (serialArticle != null) {
+				currentChapter = articleRepository.countArticleOfASerialArticle(serialArticle);
+				newArticle.setChapterId(currentChapter + 1);
+			}
 			newArticle = articleRepository.createArticle(newArticle);
 
 			// Save article_topic
@@ -75,6 +82,7 @@ public class ArticleService {
 			articleTranslation.setArticleContent(newArticle.getArticleContent());
 			articleTranslation.setLanguageCode(newArticle.getDefaultLanguage().getCode());
 			articleTranslation.setSerialArticleUuid(articleCreationRequestDto.getSerialArticleUuid());
+			articleTranslation.setChapterId(currentChapter != null ? currentChapter + 1: null);
 			articleTranslationRepository.saveArticleTranslation(articleTranslation);
 
 			// return new article response
@@ -121,5 +129,9 @@ public class ArticleService {
 		List<ArticleReadResponseDto> hotArticles = articleRepository.retrieveHotArticles(quantity, languageCode);
 		return hotArticles;
 	}
-
-}
+	
+	public ArticleReadResponseDto retrieveBySerialArticleAndChapterIdAndLanguage(String serialArticleUuid, Integer chapterId, String languageCode) {
+		ArticleReadResponseDto articleReadResponseDto = articleRepository.retrieveBySerialArticleAndChapterIdAndLanguage(serialArticleUuid, chapterId, languageCode);
+		return articleReadResponseDto;
+	}
+} 

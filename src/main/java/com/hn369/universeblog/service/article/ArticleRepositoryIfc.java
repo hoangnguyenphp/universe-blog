@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.hn369.universeblog.dto.article.ArticleReadResponseDto;
 import com.hn369.universeblog.service.entity.article.Article;
+import com.hn369.universeblog.service.entity.serialarticle.SerialArticle;
 
 public interface ArticleRepositoryIfc {
 	
@@ -16,4 +17,8 @@ public interface ArticleRepositoryIfc {
 	List<ArticleReadResponseDto> getSingleArticlesByTopicAndLanguage(String topicUuid, String languageCode);
 	
 	List<ArticleReadResponseDto> retrieveHotArticles(Integer quantity, String languageCode);
+	
+	Integer countArticleOfASerialArticle(SerialArticle serialArticle);
+	
+	ArticleReadResponseDto retrieveBySerialArticleAndChapterIdAndLanguage(String serialArticleUuid, Integer chapterId, String languageCode);
 }

@@ -35,6 +35,8 @@ public class ArticleReadResponseDto {
     private String updatedUser;
     
     private String sourceReference;
+    
+    private Integer chapterId;
 
 	public String getArticleUuid() {
 		return articleUuid;
@@ -162,5 +164,13 @@ public class ArticleReadResponseDto {
 
 	public void setSourceReference(String sourceReference) {
 		this.sourceReference = sourceReference;
+	}
+
+	public Integer getChapterId() {
+		return chapterId;
+	}
+
+	public void setChapterId(Integer chapterId) {
+		this.chapterId = chapterId;
 	}
 }
