@@ -134,4 +134,10 @@ public class ArticleService {
 		ArticleReadResponseDto articleReadResponseDto = articleRepository.retrieveBySerialArticleAndChapterIdAndLanguage(serialArticleUuid, chapterId, languageCode);
 		return articleReadResponseDto;
 	}
+	
+	public List<ArticleReadResponseDto> retrieveAllChaptersOfASerialArticle(String serialArticleUuid, String languageCode, int page, int size) {
+		int offset = page * size;
+		List<ArticleReadResponseDto> chapters = articleRepository.retrieveAllChaptersOfASerialArticle(serialArticleUuid, languageCode, size, offset);
+		return chapters;
+	}
 } 

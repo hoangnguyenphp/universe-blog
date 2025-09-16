@@ -73,5 +73,20 @@ public class ArticleController {
 		return ResponseEntity.ok(articleReadResponseDto);
 		
 	}
+	
+	@GetMapping("/articles/serial-article-chapters/{serialArticleUuid}/{languageCode}")
+	public ResponseEntity<List<ArticleReadResponseDto>> getAllChaptersOfASerialArticle(
+	    @PathVariable String serialArticleUuid, 
+	    @PathVariable String languageCode,
+	    @RequestParam(defaultValue = "0") int page,      // Default page 0
+	    @RequestParam(defaultValue = "10") int size) {
+		List<ArticleReadResponseDto> chapters = articleService.retrieveAllChaptersOfASerialArticle(serialArticleUuid, languageCode, page, size);
+		return ResponseEntity.ok(chapters);
+	}
+//	
+//	@GetMapping("/articles/relatead-articles/{articleUuid}")
+//	public ResponseEntity<List<ArticleReadResponseDto>> getRelatedArticlesByArticleUuid(@PathVariable String articleUuid) {
+//		
+//	}
 
 }

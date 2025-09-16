@@ -68,6 +68,12 @@ public class ArticleRepositoryImpl implements ArticleRepositoryIfc {
 		ArticleReadResponseDto articleReadResponseDto = articleMyBatisMapper.findBySerialArticleAndChapterIdAndLanguage(serialArticleUuid, chapterId, languageCode);
 		return articleReadResponseDto;
 	}
+
+	@Override
+	public List<ArticleReadResponseDto> retrieveAllChaptersOfASerialArticle(String serialArticleUuid, String languageCode, int size, int offset) {
+		List<ArticleReadResponseDto> articleReadResponseDtoList = articleMyBatisMapper.retrieveAllChaptersOfASerialArticle(serialArticleUuid, languageCode, size, offset);
+		return articleReadResponseDtoList;
+	}
 	
 	
 	

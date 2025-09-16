@@ -21,4 +21,6 @@ public interface ArticleRepositoryIfc {
 	Integer countArticleOfASerialArticle(SerialArticle serialArticle);
 	
 	ArticleReadResponseDto retrieveBySerialArticleAndChapterIdAndLanguage(String serialArticleUuid, Integer chapterId, String languageCode);
+	
+	List<ArticleReadResponseDto> retrieveAllChaptersOfASerialArticle(String serialArticleUuid, String languageCode, int size, int offset);
 }

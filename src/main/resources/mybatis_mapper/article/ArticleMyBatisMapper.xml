@@ -91,5 +91,18 @@
 		where serial_article_uuid = #{serialArticleUuid} and at.language_code in (#{languageCode}, 'int')
 			  and chapter_id = #{chapterId}
     </select>
+    
+	<select id="retrieveAllChaptersOfASerialArticle" resultMap="ArticleMapper">
+	    SELECT at.article_uuid, at.article_name, at.created_user, 
+	           at.updated_user, at.date_created, at.date_updated,
+	           at.chapter_id, at.serial_article_uuid, a.view_counter
+	    FROM article a 
+	         JOIN article_translation at ON a.article_uuid = at.article_uuid
+	         JOIN serial_article sa ON at.serial_article_uuid = sa.serial_article_uuid
+	    WHERE sa.serial_article_uuid = #{serialArticleUuid}
+	          AND language_code = #{languageCode}
+	    ORDER BY at.chapter_id
+	    LIMIT #{size} OFFSET #{offset}   <!-- Pagination clause -->
+	</select>
 
 </mapper>
