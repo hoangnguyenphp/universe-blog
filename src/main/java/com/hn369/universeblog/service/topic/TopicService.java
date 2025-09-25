@@ -17,6 +17,7 @@ import com.hn369.universeblog.service.entity.topic.Topic;
 import com.hn369.universeblog.service.entity.topic.TopicTranslation;
 import com.hn369.universeblog.service.entity.topic.TopicTranslationId;
 import com.hn369.universeblog.service.language.LanguageRepositoryIfc;
+import com.hn369.universeblog.dto.topic.TopicTranslationReadResponseDto;
 
 import jakarta.transaction.Transactional;
 
@@ -57,7 +58,12 @@ public class TopicService {
 
 		return topicWriteResponseDto;
 	}
-
+	
+	public  List<TopicByLanguageReadResponseDto> retrieveTopicsByLanguageCode(@PathVariable String languageCode) {
+		List<TopicByLanguageReadResponseDto> topicList = topicRepository.retrieveTopicsByLanguageCode(languageCode);
+		return topicList;
+	}
+	
 	@Transactional
 	public TopicTranslationWriteResponseDto createTopicTranslation(
 			TopicTranslationWriteRequestDto topicTranslationWriteRequestDto) {
@@ -78,8 +84,12 @@ public class TopicService {
 
 	}
 	
-	public  List<TopicByLanguageReadResponseDto> retrieveTopicsByLanguageCode(@PathVariable String languageCode) {
-		List<TopicByLanguageReadResponseDto> topicList = topicRepository.retrieveTopicsByLanguageCode(languageCode);
-		return topicList;
+	public TopicTranslationReadResponseDto retrieveTopicTranslation(String topicUuid, String languageCode) {
+		TopicTranslation topicTranslation = topicTranslationRepository.findByTopicUuidAndLanguageCode(topicUuid, languageCode);
+		TopicTranslationReadResponseDto topicTranslationReadResponseDto = new TopicTranslationReadResponseDto();
+		topicTranslationReadResponseDto.setTopicUuid(topicTranslation.getTopicUuid());
+		topicTranslationReadResponseDto.setTopicName(topicTranslation.getTopicName());
+		topicTranslationReadResponseDto.setLanguageCode(topicTranslation.getLanguageCode());
+		return topicTranslationReadResponseDto;
 	}
 }

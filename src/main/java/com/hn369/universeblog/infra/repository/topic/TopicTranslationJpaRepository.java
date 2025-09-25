@@ -10,5 +10,6 @@ import com.hn369.universeblog.service.entity.topic.TopicTranslationId;
 
 @Repository
 public interface TopicTranslationJpaRepository extends CrudRepository<TopicTranslation, TopicTranslationId> {
-	List<TopicTranslation> findByLanguageCode(String languageCode); 
+	List<TopicTranslation> findByLanguageCode(String languageCode);
+	TopicTranslation findByTopicUuidAndLanguageCode(String topicUuid, String languageCode);
 }

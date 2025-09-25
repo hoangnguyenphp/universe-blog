@@ -83,6 +83,7 @@ public class ArticleController {
 		List<ArticleReadResponseDto> chapters = articleService.retrieveAllChaptersOfASerialArticle(serialArticleUuid, languageCode, page, size);
 		return ResponseEntity.ok(chapters);
 	}
+	
 //	
 //	@GetMapping("/articles/relatead-articles/{articleUuid}")
 //	public ResponseEntity<List<ArticleReadResponseDto>> getRelatedArticlesByArticleUuid(@PathVariable String articleUuid) {
