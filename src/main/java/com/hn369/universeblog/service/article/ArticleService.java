@@ -72,7 +72,7 @@ public class ArticleService {
 			ArticleTopic newArticleTopic = new ArticleTopic();
 			newArticleTopic.setArticleUuid(newArticle.getArticleUuid());
 			newArticleTopic.setTopicUuid(masterTopic.getTopicUuid());
-			newArticleTopic.setMatterTopic(true);
+			newArticleTopic.setMasterTopic(true);
 			articleTopicRepository.saveArticleTopic(newArticleTopic);
 
 			// Save article_translation
