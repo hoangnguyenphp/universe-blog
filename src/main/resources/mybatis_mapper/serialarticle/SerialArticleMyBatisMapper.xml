@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.hn369.universeblog.infra.repository.serialarticle.SerialArticleMyBatisMapper">
+
+    <resultMap id="SerialArticleResultMap" type="com.hn369.universeblog.dto.serialarticle.SerialArticleReadResponseDto">
+        <id property="serialArticleUuid" column="serial_article_uuid"/>
+        <result property="serialArticleName" column="serial_article_name"/>
+        <result property="languageCode" column="language_code"/>
+    </resultMap>
+
+    <select id="findSerialArticleByMasterTopicUuidAndLanguage" resultMap="SerialArticleResultMap">
+		select sat.serial_article_uuid, sat.serial_article_name, sat.language_code
+		from serial_article sa join serial_article_translation sat on sa.serial_article_uuid = sat.serial_article_uuid
+							   join serial_article_topic satp on sa.serial_article_uuid = satp.serial_article_uuid
+		where sat.language_code = #{languageCode} and satp.topic_uuid = #{masterTopicUuid}
+    </select>
+
+</mapper>

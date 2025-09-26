@@ -1,9 +1,11 @@
-package com.hn369.universeblog.dto.article;
+package com.hn369.universeblog.dto.serialarticle;
 
 public class SerialArticleReadResponseDto {
 	private String serialArticleUuid;
 	private String serialArticleName;
 	private String languageCode;
+	private String masterTopicUuid;
+	private String masterTopicName;
 	
 	public String getSerialArticleUuid() {
 		return serialArticleUuid;
@@ -23,6 +25,19 @@ public class SerialArticleReadResponseDto {
 	public void setLanguageCode(String languageCode) {
 		this.languageCode = languageCode;
 	}
+	public String getMasterTopicUuid() {
+		return masterTopicUuid;
+	}
+	public void setMasterTopicUuid(String masterTopicUuid) {
+		this.masterTopicUuid = masterTopicUuid;
+	}
+	public String getMasterTopicName() {
+		return masterTopicName;
+	}
+	public void setMasterTopicName(String masterTopicName) {
+		this.masterTopicName = masterTopicName;
+	}
+	
 	
 	
 

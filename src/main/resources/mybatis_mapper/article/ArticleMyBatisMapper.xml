@@ -48,7 +48,7 @@
 	    JOIN topic_translation tt ON t.topic_uuid = tt.topic_uuid
 	    JOIN language l ON at.language_code = l.language_code
 	    WHERE atp.topic_uuid = #{topicUuid}
-	    AND atp.matter_topic = true
+	    AND atp.master_topic = true
 	    AND at.language_code IN ('int', #{languageCode})
 	    AND tt.language_code IN ('int', #{languageCode})
 	    AND at.serial_article_uuid IS NULL
@@ -70,7 +70,7 @@
 			  join topic t on t.topic_uuid = atp.topic_uuid
 			  join topic_translation tt on t.topic_uuid = tt.topic_uuid
 			  join language l on at.language_code = l.language_code
-		where atp.matter_topic = true
+		where atp.master_topic = true
 			  and at.language_code in ('int', #{languageCode})
 			  and tt.language_code in ('int', #{languageCode})
 	    order by a.view_counter desc

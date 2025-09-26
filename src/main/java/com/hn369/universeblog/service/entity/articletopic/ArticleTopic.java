@@ -17,17 +17,17 @@ public class ArticleTopic implements Serializable {
     @Column(name = "topic_uuid", length = 100, nullable = false)
     private String topicUuid;
 
-    @Column(name = "matter_topic", nullable = false)
-    private boolean matterTopic = false;
+    @Column(name = "master_topic", nullable = false)
+    private boolean masterTopic = false;
 
     // Constructors
     public ArticleTopic() {
     }
 
-    public ArticleTopic(String articleUuid, String topicUuid, boolean matterTopic) {
+    public ArticleTopic(String articleUuid, String topicUuid, boolean masterTopic) {
         this.articleUuid = articleUuid;
         this.topicUuid = topicUuid;
-        this.matterTopic = matterTopic;
+        this.masterTopic = masterTopic;
     }
 
     // Getters and Setters
@@ -47,28 +47,28 @@ public class ArticleTopic implements Serializable {
         this.topicUuid = topicUuid;
     }
 
-    public boolean isMatterTopic() {
-        return matterTopic;
-    }
+    public boolean isMasterTopic() {
+		return masterTopic;
+	}
 
-    public void setMatterTopic(boolean matterTopic) {
-        this.matterTopic = matterTopic;
-    }
+	public void setMasterTopic(boolean masterTopic) {
+		this.masterTopic = masterTopic;
+	}
 
-    // Equals and HashCode
+	// Equals and HashCode
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         ArticleTopic that = (ArticleTopic) o;
-        return matterTopic == that.matterTopic &&
+        return masterTopic == that.masterTopic &&
                Objects.equals(articleUuid, that.articleUuid) &&
                Objects.equals(topicUuid, that.topicUuid);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(articleUuid, topicUuid, matterTopic);
+        return Objects.hash(articleUuid, topicUuid, masterTopic);
     }
 
     // ToString
@@ -77,7 +77,7 @@ public class ArticleTopic implements Serializable {
         return "ArticleTopic{" +
                "articleUuid='" + articleUuid + '\'' +
                ", topicUuid='" + topicUuid + '\'' +
-               ", matterTopic=" + matterTopic +
+               ", masterTopic=" + masterTopic +
                '}';
     }
 }
