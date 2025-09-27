@@ -31,4 +31,10 @@ public class SerialArticleRepositoryImpl implements SerialArticleRepositoryIfc {
 		return serialArticleList;
 	}
 
+	@Override
+	public SerialArticleReadResponseDto findSerialArticleByUuidAndLanguage(String serialArticleUuid, String languageCode) {
+		SerialArticleReadResponseDto serialArticle = serialArticleMyBatisMapper.findSerialArticleByUuidAndLanguage(serialArticleUuid, languageCode);
+		return serialArticle;
+	}
+
 }

@@ -16,5 +16,10 @@
 							   join serial_article_topic satp on sa.serial_article_uuid = satp.serial_article_uuid
 		where sat.language_code = #{languageCode} and satp.topic_uuid = #{masterTopicUuid}
     </select>
+    <select id="findSerialArticleByUuidAndLanguage" resultMap="SerialArticleResultMap">
+		select sat.serial_article_uuid, sat.serial_article_name, sat.language_code
+		from serial_article sa join serial_article_translation sat on sa.serial_article_uuid = sat.serial_article_uuid
+		where sat.language_code = #{languageCode} and sat.serial_article_uuid = #{serialArticleUuid}
+    </select>
 
 </mapper>

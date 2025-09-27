@@ -9,4 +9,6 @@ public interface SerialArticleRepositoryIfc {
 	SerialArticle findByUuid(String uuid);
 	
 	List<SerialArticleReadResponseDto> findSerialArticleByMasterTopicUuidAndLanguage(String masterTopicUuid, String languageCode);
+	
+	SerialArticleReadResponseDto findSerialArticleByUuidAndLanguage(String serialArticleUuid, String languageCode);
 }
