@@ -87,7 +87,7 @@ public class ArticleController {
 	
 	
 	@GetMapping("/articles/relatead-articles/{articleUuid}/{languageCode}")
-	public ResponseEntity<List<RelatedArticleReadResponseDto>> getRelatedArticlesByArticleUuid(@PathVariable String articleUuid, @PathVariable String languageCode,
+	public ResponseEntity<List<RelatedArticleReadResponseDto>> getRelatedArticlesByArticleUuidAndLanguage(@PathVariable String articleUuid, @PathVariable String languageCode,
 		    @RequestParam(defaultValue = "0") int page,      // Default page 0
 		    @RequestParam(defaultValue = "10") int size) {
 		List<RelatedArticleReadResponseDto> relatedArticles = articleService.retrieveRelatedArticles(articleUuid, languageCode, page, size);
