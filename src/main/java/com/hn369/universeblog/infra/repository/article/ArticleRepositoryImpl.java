@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.hn369.universeblog.dto.article.ArticleReadResponseDto;
+import com.hn369.universeblog.dto.article.RelatedArticleReadResponseDto;
 import com.hn369.universeblog.infra.repository.serialarticle.SerialArticleJpaRespository;
 import com.hn369.universeblog.service.article.ArticleRepositoryIfc;
 import com.hn369.universeblog.service.entity.article.Article;
@@ -73,6 +74,12 @@ public class ArticleRepositoryImpl implements ArticleRepositoryIfc {
 	public List<ArticleReadResponseDto> retrieveAllChaptersOfASerialArticle(String serialArticleUuid, String languageCode, int size, int offset) {
 		List<ArticleReadResponseDto> articleReadResponseDtoList = articleMyBatisMapper.retrieveAllChaptersOfASerialArticle(serialArticleUuid, languageCode, size, offset);
 		return articleReadResponseDtoList;
+	}
+
+	@Override
+	public List<RelatedArticleReadResponseDto> retrieveRelatedArticles(String articleUuid, String languageCode, int size, int offset) {
+		List<RelatedArticleReadResponseDto> relatedArticles = articleMyBatisMapper.retrieveRelatedArticles(articleUuid, languageCode, size, offset);
+		return relatedArticles;
 	}
 	
 	

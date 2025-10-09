@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.hn369.universeblog.dto.article.ArticleCreationRequestDto;
 import com.hn369.universeblog.dto.article.ArticleCreationResponseDto;
 import com.hn369.universeblog.dto.article.ArticleReadResponseDto;
+import com.hn369.universeblog.dto.article.RelatedArticleReadResponseDto;
 import com.hn369.universeblog.service.article.ArticleService;
 
 @RestController
@@ -84,10 +85,13 @@ public class ArticleController {
 		return ResponseEntity.ok(chapters);
 	}
 	
-//	
-//	@GetMapping("/articles/relatead-articles/{articleUuid}")
-//	public ResponseEntity<List<ArticleReadResponseDto>> getRelatedArticlesByArticleUuid(@PathVariable String articleUuid) {
-//		
-//	}
+	
+	@GetMapping("/articles/relatead-articles/{articleUuid}/{languageCode}")
+	public ResponseEntity<List<RelatedArticleReadResponseDto>> getRelatedArticlesByArticleUuid(@PathVariable String articleUuid, @PathVariable String languageCode,
+		    @RequestParam(defaultValue = "0") int page,      // Default page 0
+		    @RequestParam(defaultValue = "10") int size) {
+		List<RelatedArticleReadResponseDto> relatedArticles = articleService.retrieveRelatedArticles(articleUuid, languageCode, page, size);
+		return ResponseEntity.ok(relatedArticles);
+	}
 
 }

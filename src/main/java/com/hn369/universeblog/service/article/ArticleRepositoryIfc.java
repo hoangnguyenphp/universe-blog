@@ -3,6 +3,7 @@ package com.hn369.universeblog.service.article;
 import java.util.List;
 
 import com.hn369.universeblog.dto.article.ArticleReadResponseDto;
+import com.hn369.universeblog.dto.article.RelatedArticleReadResponseDto;
 import com.hn369.universeblog.service.entity.article.Article;
 import com.hn369.universeblog.service.entity.serialarticle.SerialArticle;
 
@@ -23,4 +24,6 @@ public interface ArticleRepositoryIfc {
 	ArticleReadResponseDto retrieveBySerialArticleAndChapterIdAndLanguage(String serialArticleUuid, Integer chapterId, String languageCode);
 	
 	List<ArticleReadResponseDto> retrieveAllChaptersOfASerialArticle(String serialArticleUuid, String languageCode, int size, int offset);
+	
+	List<RelatedArticleReadResponseDto> retrieveRelatedArticles(String articleUuid, String languageCode, int size, int offset);
 }

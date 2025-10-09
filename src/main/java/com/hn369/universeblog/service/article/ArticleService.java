@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.hn369.universeblog.dto.article.ArticleCreationRequestDto;
 import com.hn369.universeblog.dto.article.ArticleCreationResponseDto;
 import com.hn369.universeblog.dto.article.ArticleReadResponseDto;
+import com.hn369.universeblog.dto.article.RelatedArticleReadResponseDto;
 import com.hn369.universeblog.service.articletopic.ArticleTopicRepositoryIfc;
 import com.hn369.universeblog.service.entity.article.Article;
 import com.hn369.universeblog.service.entity.article.ArticleTranslation;
@@ -139,5 +140,11 @@ public class ArticleService {
 		int offset = page * size;
 		List<ArticleReadResponseDto> chapters = articleRepository.retrieveAllChaptersOfASerialArticle(serialArticleUuid, languageCode, size, offset);
 		return chapters;
+	}
+	
+	public List<RelatedArticleReadResponseDto> retrieveRelatedArticles(String articleUuid, String languageCode, int page, int size) {
+		int offset = page * size;
+		List<RelatedArticleReadResponseDto> relatedArticles = articleRepository.retrieveRelatedArticles(articleUuid, languageCode, size, offset);
+		return relatedArticles;
 	}
 } 

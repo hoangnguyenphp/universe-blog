@@ -22,6 +22,17 @@
         <result property="dateUpdated" column="date_updated"/>
         <result property="chapterId" column="chapter_id"/>
     </resultMap>
+    
+    <resultMap id="RelatedArticleMapper" type="com.hn369.universeblog.dto.article.RelatedArticleReadResponseDto">
+        <id property="articleUuid" column="article_uuid"/>
+        <result property="articleName" column="article_name"/>
+        <result property="createdUser" column="created_user"/>
+        <result property="dateCreated" column="date_created"/>
+        <result property="viewCounter" column="view_counter"/>
+        <result property="isSerialArticleMaster" column="is_serial_article_master"/>
+        <result property="topicOverlap" column="topic_overlap"/>
+    </resultMap>
+    
 
 	<select id="findSingleArticlesByTopicAndLanguage" resultMap="ArticleMapper">
 	    SELECT 
@@ -103,6 +114,96 @@
 	          AND language_code = #{languageCode}
 	    ORDER BY at.chapter_id
 	    LIMIT #{size} OFFSET #{offset}   <!-- Pagination clause -->
+	</select>
+	
+	<select id="retrieveRelatedArticles" resultMap="RelatedArticleMapper">
+	  <![CDATA[
+		/*
+		I want to get related articles which have the same topic with an input article_uuid. Do you think this query is ok:
+		
+			    SELECT a.article_uuid, 
+			   		   COALESCE(at2.article_name, a.article_name) AS display_name,
+			   		   a.view_counter,
+			   		   a.date_created,
+			   		   a.created_user,
+			   		   COUNT(*) AS topic_overlap
+			    FROM article a JOIN article_translation at1 ON a.article_uuid = at1.article_uuid
+			    				AND at1.article_uuid = '2037426d-ad61-4d12-8a04-765228806dbf'
+			    				AND at1.language_code = 'en'
+			    			 JOIN article_topic ato1 ON at1.article_uuid = ato1.article_uuid
+			    			 JOIN article_topic ato2 ON ato1.topic_uuid = ato2.topic_uuid
+			    			 JOIN atilce_translation at2 ON ato2.article_uuid = at2.article_uuid
+			    			 	AND at2.language_code = 'en'
+			    WHERE   at1.article_uuid <> at2. article_uuid
+			    GROUP BY a.article_uuid, at2.article_name, a.article_name, a.view_counter, a.date_created, a.created_user
+			    ORDER BY topic_overlap
+			    LIMIT 10 OFFSET 0
+		*/  
+		WITH target_topics AS (
+			SELECT topic_uuid
+			FROM article_topic
+			WHERE article_uuid = #{articleUuid}
+		),
+		
+		single_article AS (
+			SELECT 
+				a2.article_uuid AS article_uuid, 
+				COALESCE(at2.article_name, a2.article_name) AS article_name,
+				a2.view_counter,
+				a2.date_created,
+				a2.created_user,
+				false AS is_serial_article_master,
+				COUNT(*)::int AS topic_overlap
+			FROM target_topics tt
+			JOIN article_topic ato2 
+				ON tt.topic_uuid = ato2.topic_uuid
+			JOIN article a2 
+				ON ato2.article_uuid = a2.article_uuid
+			LEFT JOIN article_translation at2 
+				ON a2.article_uuid = at2.article_uuid
+				AND at2.language_code IN (#{languageCode}, 'int')
+			WHERE a2.article_uuid <> '2037426d-ad61-4d12-8a04-765228806dbf' AND a2.serial_article_uuid = null
+			GROUP BY 
+				a2.article_uuid,
+				at2.article_name,
+				a2.article_name,
+				a2.view_counter,
+				a2.date_created,
+				a2.created_user
+		),
+		
+		serial_article_master AS (
+			SELECT 
+				sa.serial_article_uuid AS article_uuid, 
+				COALESCE(sat2.serial_article_name, sa.serial_article_name) AS article_name,
+				NULL::int AS view_counter,
+				NULL::timestamp AS date_created,
+				NULL::text AS created_user,
+				true AS is_serial_article_master,
+				COUNT(*)::int AS topic_overlap
+			FROM target_topics tt1
+			JOIN serial_article_topic sat 
+				ON tt1.topic_uuid = sat.topic_uuid
+			JOIN serial_article sa 
+				ON sat.serial_article_uuid = sa.serial_article_uuid
+			LEFT JOIN serial_article_translation sat2 
+				ON sa.serial_article_uuid = sat2.serial_article_uuid
+				AND sat2.language_code IN (#{languageCode}, 'int')
+			GROUP BY 
+				sa.serial_article_uuid,
+				sat2.serial_article_name,
+				sa.serial_article_name
+		)
+		
+		SELECT *
+		FROM (
+			SELECT * FROM single_article
+			UNION ALL
+			SELECT * FROM serial_article_master
+		) combined
+		ORDER BY topic_overlap DESC, is_serial_article_master
+		LIMIT #{size} OFFSET #{offset}
+	  ]]>
 	</select>
 
 </mapper>

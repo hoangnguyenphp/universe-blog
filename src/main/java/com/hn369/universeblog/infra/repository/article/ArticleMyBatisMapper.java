@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 
 import com.hn369.universeblog.dto.article.ArticleReadResponseDto;
+import com.hn369.universeblog.dto.article.RelatedArticleReadResponseDto;
 
 @Mapper
 public interface ArticleMyBatisMapper {
@@ -13,4 +14,5 @@ public interface ArticleMyBatisMapper {
 	ArticleReadResponseDto retrieveArticleByUuidAndLanguage(String articleUuid, String languageCode);
 	ArticleReadResponseDto findBySerialArticleAndChapterIdAndLanguage(String serialArticleUuid, Integer chapterId, String languageCode);
 	List<ArticleReadResponseDto> retrieveAllChaptersOfASerialArticle(String serialArticleUuid, String languageCode, int size, int offset);
+	List<RelatedArticleReadResponseDto> retrieveRelatedArticles(String articleUuid, String languageCode, int size, int offset);
 }
