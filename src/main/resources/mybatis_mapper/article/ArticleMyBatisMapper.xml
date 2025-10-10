@@ -162,7 +162,7 @@
 			LEFT JOIN article_translation at2 
 				ON a2.article_uuid = at2.article_uuid
 				AND at2.language_code IN (#{languageCode}, 'int')
-			WHERE a2.article_uuid <> '2037426d-ad61-4d12-8a04-765228806dbf' AND a2.serial_article_uuid = null
+			WHERE a2.article_uuid <> #{articleUuid} AND a2.serial_article_uuid is null
 			GROUP BY 
 				a2.article_uuid,
 				at2.article_name,
