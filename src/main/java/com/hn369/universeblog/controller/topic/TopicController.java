@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.hn369.universeblog.dto.topic.TopicByLanguageReadResponseDto;
+import com.hn369.universeblog.dto.topic.TopicReadResponseDto;
 import com.hn369.universeblog.dto.topic.TopicTranslationReadResponseDto;
 import com.hn369.universeblog.dto.topic.TopicTranslationWriteRequestDto;
 import com.hn369.universeblog.dto.topic.TopicTranslationWriteResponseDto;
@@ -28,6 +29,12 @@ public class TopicController {
 	public ResponseEntity<TopicWriteResponseDto> createTopic(@RequestBody TopicWriteRequestDto topicWriteRequestDto) {
 		TopicWriteResponseDto topicWriteResponseDto = topicService.createTopic(topicWriteRequestDto);
 		return ResponseEntity.ok(topicWriteResponseDto);
+	}
+	
+	@GetMapping("topics")
+	public ResponseEntity<List<TopicReadResponseDto>> getAllTopics() {
+		List<TopicReadResponseDto> topicResponseList = topicService.retrieveAllTopics();
+		return ResponseEntity.ok(topicResponseList);
 	}
 	
 	

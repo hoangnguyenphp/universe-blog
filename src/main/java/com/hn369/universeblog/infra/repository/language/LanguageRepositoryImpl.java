@@ -1,5 +1,7 @@
 package com.hn369.universeblog.infra.repository.language;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -16,6 +18,12 @@ public class LanguageRepositoryImpl implements LanguageRepositoryIfc {
 	public Language findByCode(String languageCode) {
 		Language language = languageJpaRepository.findByCode(languageCode);
 		return language;
+	}
+
+	@Override
+	public List<Language> findAll() {
+		List<Language> languageList = languageJpaRepository.findAll();
+		return languageList;
 	}
 
 }

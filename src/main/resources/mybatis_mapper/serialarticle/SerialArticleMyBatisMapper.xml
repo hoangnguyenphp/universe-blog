@@ -8,6 +8,7 @@
         <id property="serialArticleUuid" column="serial_article_uuid"/>
         <result property="serialArticleName" column="serial_article_name"/>
         <result property="languageCode" column="language_code"/>
+        <result property="default_language_code" column="defaultLanguageCode"/>
     </resultMap>
 
     <select id="findSerialArticleByMasterTopicUuidAndLanguage" resultMap="SerialArticleResultMap">
@@ -20,6 +21,12 @@
 		select sat.serial_article_uuid, sat.serial_article_name, sat.language_code
 		from serial_article sa join serial_article_translation sat on sa.serial_article_uuid = sat.serial_article_uuid
 		where sat.language_code = #{languageCode} and sat.serial_article_uuid = #{serialArticleUuid}
+    </select>
+    
+    <!-- For Admin to create the master chapter (master serial article) -->
+    <select id="findAllSerialArticles" resultMap="SerialArticleResultMap">
+		select sa.serial_article_uuid, sa.serial_article_name, sa.default_language_code
+		from serial_article sa
     </select>
 
 </mapper>

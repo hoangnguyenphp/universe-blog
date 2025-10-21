@@ -1,5 +1,6 @@
 package com.hn369.universeblog.service.topic;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -8,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import com.hn369.universeblog.dto.topic.TopicByLanguageReadResponseDto;
+import com.hn369.universeblog.dto.topic.TopicReadResponseDto;
 import com.hn369.universeblog.dto.topic.TopicTranslationWriteRequestDto;
 import com.hn369.universeblog.dto.topic.TopicTranslationWriteResponseDto;
 import com.hn369.universeblog.dto.topic.TopicWriteRequestDto;
@@ -91,5 +93,24 @@ public class TopicService {
 		topicTranslationReadResponseDto.setTopicName(topicTranslation.getTopicName());
 		topicTranslationReadResponseDto.setLanguageCode(topicTranslation.getLanguageCode());
 		return topicTranslationReadResponseDto;
+	}
+	
+	public List<TopicReadResponseDto> retrieveAllTopics() {
+		List<Topic> topicList = topicRepository.retrieveAllTopics();
+		List<TopicReadResponseDto> topicResponseList = new ArrayList<>();
+		for (Topic topic : topicList) {
+			TopicReadResponseDto topicReadResponseDto = topicMapper(topic);
+			topicResponseList.add(topicReadResponseDto);
+		}
+		
+		return topicResponseList;
+	}
+	
+	private TopicReadResponseDto topicMapper(Topic topic) {
+		TopicReadResponseDto topicReadResponseDto = new TopicReadResponseDto();
+		topicReadResponseDto.setTopicUuid(topic.getTopicUuid());
+		topicReadResponseDto.setTopicName(topic.getTopicName());
+		topicReadResponseDto.setDefaultLanguageCode(topic.getDefaultLanguage().getCode());
+		return topicReadResponseDto;
 	}
 }

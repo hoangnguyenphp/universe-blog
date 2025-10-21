@@ -11,10 +11,10 @@ import com.hn369.universeblog.service.serialarticle.SerialArticleRepositoryIfc;
 
 @Repository
 public class SerialArticleRepositoryImpl implements SerialArticleRepositoryIfc {
-	
+
 	@Autowired
 	private SerialArticleMyBatisMapper serialArticleMyBatisMapper;
-	
+
 	@Autowired
 	private SerialArticleJpaRespository serialArticleJpaRespository;
 
@@ -27,14 +27,23 @@ public class SerialArticleRepositoryImpl implements SerialArticleRepositoryIfc {
 	@Override
 	public List<SerialArticleReadResponseDto> findSerialArticleByMasterTopicUuidAndLanguage(String masterTopicUuid,
 			String languageCode) {
-		List<SerialArticleReadResponseDto> serialArticleList = serialArticleMyBatisMapper.findSerialArticleByMasterTopicUuidAndLanguage(masterTopicUuid, languageCode);
+		List<SerialArticleReadResponseDto> serialArticleList = serialArticleMyBatisMapper
+				.findSerialArticleByMasterTopicUuidAndLanguage(masterTopicUuid, languageCode);
 		return serialArticleList;
 	}
 
 	@Override
-	public SerialArticleReadResponseDto findSerialArticleByUuidAndLanguage(String serialArticleUuid, String languageCode) {
-		SerialArticleReadResponseDto serialArticle = serialArticleMyBatisMapper.findSerialArticleByUuidAndLanguage(serialArticleUuid, languageCode);
+	public SerialArticleReadResponseDto findSerialArticleByUuidAndLanguage(String serialArticleUuid,
+			String languageCode) {
+		SerialArticleReadResponseDto serialArticle = serialArticleMyBatisMapper
+				.findSerialArticleByUuidAndLanguage(serialArticleUuid, languageCode);
 		return serialArticle;
+	}
+
+	@Override
+	public List<SerialArticleReadResponseDto> findAllSerialArticles() {
+		List<SerialArticleReadResponseDto> serialArticleList = serialArticleMyBatisMapper.findAllSerialArticles();
+		return serialArticleList;
 	}
 
 }

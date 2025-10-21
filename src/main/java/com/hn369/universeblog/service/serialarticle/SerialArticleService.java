@@ -22,5 +22,10 @@ public class SerialArticleService {
 		SerialArticleReadResponseDto serialArticle = serialArticleRepository.findSerialArticleByUuidAndLanguage(serialArticleUuid, languageCode);
 		return serialArticle;
 	}
+	
+	public List<SerialArticleReadResponseDto> retrieveAllSerialArticles() {
+		List<SerialArticleReadResponseDto> serialArticleList = serialArticleRepository.findAllSerialArticles();
+		return serialArticleList;
+	}
 
 }

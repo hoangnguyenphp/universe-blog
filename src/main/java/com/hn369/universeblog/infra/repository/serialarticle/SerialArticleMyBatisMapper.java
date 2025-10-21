@@ -11,4 +11,5 @@ import com.hn369.universeblog.dto.serialarticle.SerialArticleReadResponseDto;
 public interface SerialArticleMyBatisMapper {
 	List<SerialArticleReadResponseDto> findSerialArticleByMasterTopicUuidAndLanguage(@Param("masterTopicUuid") String masterTopicUuid, @Param("languageCode") String languageCode);
 	SerialArticleReadResponseDto findSerialArticleByUuidAndLanguage(@Param("serialArticleUuid") String serialArticleUuid, @Param("languageCode") String languageCode);
+	List<SerialArticleReadResponseDto> findAllSerialArticles();
 }

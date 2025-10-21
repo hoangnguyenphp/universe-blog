@@ -13,6 +13,8 @@ public interface TopicRepositoryIfc {
 	
 	List<TopicByLanguageReadResponseDto> retrieveTopicsByLanguageCode(String languageCode);
 	
-	TopicTranslation retriveTopicTranslation(String topicUuid, String languageCode);
+	TopicTranslation retrieveTopicTranslation(String topicUuid, String languageCode);
+	
+	List<Topic> retrieveAllTopics();
 
 }

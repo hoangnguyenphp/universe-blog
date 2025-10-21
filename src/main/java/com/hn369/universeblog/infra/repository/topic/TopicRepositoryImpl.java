@@ -43,9 +43,15 @@ public class TopicRepositoryImpl implements TopicRepositoryIfc {
 	}
 
 	@Override
-	public TopicTranslation retriveTopicTranslation(String topicUuid, String languageCode) {
+	public TopicTranslation retrieveTopicTranslation(String topicUuid, String languageCode) {
 		TopicTranslation topicTranslation = topicTranslationJpaRepository.findByTopicUuidAndLanguageCode(topicUuid, languageCode);
 		return topicTranslation;
+	}
+
+	@Override
+	public List<Topic> retrieveAllTopics() {
+		List<Topic> topicList = topicJpaRepository.findAll();
+		return topicList;
 	}
 
 }

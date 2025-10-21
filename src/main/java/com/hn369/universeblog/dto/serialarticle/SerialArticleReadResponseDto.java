@@ -4,6 +4,7 @@ public class SerialArticleReadResponseDto {
 	private String serialArticleUuid;
 	private String serialArticleName;
 	private String languageCode;
+	private String defaultLanguageCode;
 	private String masterTopicUuid;
 	private String masterTopicName;
 	
@@ -24,6 +25,13 @@ public class SerialArticleReadResponseDto {
 	}
 	public void setLanguageCode(String languageCode) {
 		this.languageCode = languageCode;
+	}
+
+	public String getDefaultLanguageCode() {
+		return defaultLanguageCode;
+	}
+	public void setDefaultLanguageCode(String defaultLanguageCode) {
+		this.defaultLanguageCode = defaultLanguageCode;
 	}
 	public String getMasterTopicUuid() {
 		return masterTopicUuid;
