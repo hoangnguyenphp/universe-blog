@@ -48,8 +48,8 @@ public class ArticleService {
 	public ArticleCreationResponseDto createArticle(ArticleCreationRequestDto articleCreationRequestDto) {
 		ArticleCreationResponseDto articleCreationResponseDto = new ArticleCreationResponseDto();
 		try {
-			SerialArticle serialArticle = serialArticleRepository
-					.findByUuid(articleCreationRequestDto.getSerialArticleUuid());
+			SerialArticle serialArticle = articleCreationRequestDto.getSerialArticleUuid() != null ? serialArticleRepository
+					.findByUuid(articleCreationRequestDto.getSerialArticleUuid()) : null;
 			Language defaultLanguage = languageRepository.findByCode(articleCreationRequestDto.getDefaultLanguage());
 			
 			Integer currentChapter = null;
@@ -59,7 +59,7 @@ public class ArticleService {
 			newArticle.setArticleName(articleCreationRequestDto.getArticleName());
 			newArticle.setArticleContent(articleCreationRequestDto.getArticleContent());
 			newArticle.setSerialArticle(serialArticle);
-			newArticle.setViewCounter(articleCreationRequestDto.getViewCounter());
+			newArticle.setViewCounter(articleCreationRequestDto.getViewCounter() == null ? Integer.parseInt("0") : articleCreationRequestDto.getViewCounter());
 			newArticle.setDefaultLanguage(defaultLanguage);
 			if (serialArticle != null) {
 				currentChapter = articleRepository.countArticleOfASerialArticle(serialArticle);

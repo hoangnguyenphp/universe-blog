@@ -89,10 +89,26 @@
     </select>
 
 	<select id="retrieveArticleByUuidAndLanguage" resultMap="ArticleMapper">
-		select article_uuid, article_name, article_content,  date_created, date_updated, serial_article_uuid,
-			   created_user, updated_user, source_reference, chapter_id, l.language_code, l.language_name
-		from article_translation at join language l on at.language_code = l.language_code
-		where article_uuid = #{articleUuid} and at.language_code in (#{languageCode}, 'int')
+	  SELECT
+	    at.article_uuid,
+	    article_name,
+	    article_content,
+	    date_created,
+	    date_updated,
+	    serial_article_uuid,
+	    created_user,
+	    updated_user,
+	    source_reference,
+	    chapter_id,
+	    l.language_code,
+	    l.language_name,
+	    ta.topic_uuid
+	  FROM article_translation at
+	  JOIN language l ON at.language_code = l.language_code
+	  JOIN article_topic ta ON at.article_uuid = ta.article_uuid
+	    AND ta.master_topic = true
+	  WHERE at.article_uuid = #{articleUuid}
+	    AND at.language_code IN (#{languageCode}, 'int')
     </select>
     
     <select id="findBySerialArticleAndChapterIdAndLanguage" resultMap="ArticleMapper">
