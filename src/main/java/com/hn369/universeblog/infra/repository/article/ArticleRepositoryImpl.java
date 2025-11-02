@@ -5,6 +5,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.hn369.universeblog.dto.article.ArticleMasterSearchRequestDto;
+import com.hn369.universeblog.dto.article.ArticleMasterSearchResponseDto;
 import com.hn369.universeblog.dto.article.ArticleReadResponseDto;
 import com.hn369.universeblog.dto.article.RelatedArticleReadResponseDto;
 import com.hn369.universeblog.infra.repository.serialarticle.SerialArticleJpaRespository;
@@ -28,7 +30,7 @@ public class ArticleRepositoryImpl implements ArticleRepositoryIfc {
 	private SerialArticleJpaRespository serialArticleJpaRespository;
 
 	@Override
-	public Article createArticle(Article rawArticle) {
+	public Article saveArticle(Article rawArticle) {
 		Article newArticle = articleJpaRepository.save(rawArticle);
 		return newArticle;
 	}
@@ -36,6 +38,13 @@ public class ArticleRepositoryImpl implements ArticleRepositoryIfc {
 	@Override
 	public Article retrieveArticle(String articleUuid) {
 		Article article = articleJpaRepository.findByArticleUuid(articleUuid);
+		return article;
+	}
+	
+	@Override
+	
+	public Article findByArticleUuidAndDefaultLanguageCode(String articleUuid, String languageCode) {
+		Article article = articleJpaRepository.findByArticleUuidAndDefaultLanguageCode(articleUuid, languageCode);
 		return article;
 	}
 	
@@ -81,7 +90,11 @@ public class ArticleRepositoryImpl implements ArticleRepositoryIfc {
 		List<RelatedArticleReadResponseDto> relatedArticles = articleMyBatisMapper.retrieveRelatedArticles(articleUuid, languageCode, size, offset);
 		return relatedArticles;
 	}
-	
-	
-	
+
+	@Override
+	public List<ArticleMasterSearchResponseDto> searchArticleMaster(
+			ArticleMasterSearchRequestDto articleMasterSearchRequestDto) {
+		List<ArticleMasterSearchResponseDto> articles = articleMyBatisMapper.searchArticleMaster(articleMasterSearchRequestDto);
+		return articles;
+	}
 }

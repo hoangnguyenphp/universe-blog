@@ -7,6 +7,6 @@ import com.hn369.universeblog.service.entity.article.ArticleTranslation;
 import com.hn369.universeblog.service.entity.article.ArticleTranslationId;
 
 @Repository
-public interface ArticleTranslationJpaRepository extends CrudRepository<ArticleTranslation, ArticleTranslationId>{
+public interface ArticleTranslationJpaRepository extends CrudRepository<ArticleTranslation, ArticleTranslationId> {
 
 }

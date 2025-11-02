@@ -2,6 +2,8 @@ package com.hn369.universeblog.service.serialarticle;
 
 import java.util.List;
 
+import com.hn369.universeblog.dto.serialarticle.SerialArticleMasterSearchRequestDto;
+import com.hn369.universeblog.dto.serialarticle.SerialArticleMasterSearchResponseDto;
 import com.hn369.universeblog.dto.serialarticle.SerialArticleReadResponseDto;
 import com.hn369.universeblog.service.entity.serialarticle.SerialArticle;
 
@@ -13,4 +15,6 @@ public interface SerialArticleRepositoryIfc {
 	SerialArticleReadResponseDto findSerialArticleByUuidAndLanguage(String serialArticleUuid, String languageCode);
 	
 	List<SerialArticleReadResponseDto> findAllSerialArticles();
+	
+	List<SerialArticleMasterSearchResponseDto> searchSerialArticleMaster(SerialArticleMasterSearchRequestDto searchRequestDto);
 }

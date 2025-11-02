@@ -10,5 +10,7 @@ import com.hn369.universeblog.service.entity.serialarticle.SerialArticle;
 public interface ArticleJpaRepository extends CrudRepository<Article, Long>{
 	Article findByArticleUuid(String articleUuid);
 	
+	Article findByArticleUuidAndDefaultLanguageCode(String articleUuid, String languageCode);
+	
 	Integer countBySerialArticle(SerialArticle serialArticle);
 }

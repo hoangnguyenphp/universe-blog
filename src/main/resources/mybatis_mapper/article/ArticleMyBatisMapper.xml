@@ -33,6 +33,69 @@
         <result property="topicOverlap" column="topic_overlap"/>
     </resultMap>
     
+	<resultMap id="ArticleMasterSearchMapper" type="com.hn369.universeblog.dto.article.ArticleMasterSearchResponseDto">
+	    <result property="articleUuid" column="article_uuid"/>
+	    <result property="articleName" column="article_name"/>
+	    <result property="defaultLanguageCode" column="default_language_code"/>
+	    <result property="serialArticleUuid" column="serial_article_uuid"/>
+	    <result property="topicUuid" column="topic_uuid"/>
+	    <result property="topicName" column="topic_name"/>
+	    <result property="chapterId" column="chapter_id"/>
+	    <result property="createdUser" column="created_user"/>
+	    <result property="dateCreated" column="date_created"/>
+	    <result property="dateUpdated" column="date_updated"/>
+	</resultMap>    
+
+	<select id="searchArticleMaster" parameterType="com.hn369.universeblog.dto.article.ArticleMasterSearchRequestDto" resultMap="ArticleMasterSearchMapper">
+		  SELECT
+		      a.article_uuid,
+		      a.article_name,
+		      a.default_language_code,
+		      a.serial_article_uuid,
+		      t.topic_uuid,
+		      t.topic_name,
+		      a.chapter_id,
+		      a.created_user,
+		      a.date_created,
+		      a.date_updated
+		  FROM article a
+		  LEFT JOIN article_topic atp
+		    ON a.article_uuid = atp.article_uuid AND atp.master_topic = true
+		  LEFT JOIN topic t
+		    ON atp.topic_uuid = t.topic_uuid
+		  WHERE 1=1
+		
+		  <if test="articleName != null and articleName != ''">
+		    AND LOWER(a.article_name) LIKE LOWER(CONCAT('%', #{articleName}, '%'))
+		  </if>
+		
+		  <if test="topicName != null and topicName != ''">
+		    AND LOWER(t.topic_name) LIKE LOWER(CONCAT('%', #{topicName}, '%'))
+		  </if>
+		
+		  <if test="createdUser != null and createdUser != ''">
+		    AND LOWER(a.created_user) LIKE LOWER(CONCAT('%', #{createdUser}, '%'))
+		  </if>
+		
+		  <if test="defaultLanguageCode != null and defaultLanguageCode != ''">
+		    AND a.default_language_code = #{defaultLanguageCode}
+		  </if>
+		
+		  <if test="dateCreatedFrom != null and dateCreatedFrom != ''">
+		    AND a.date_created &gt;= #{dateCreatedFrom}
+		  </if>
+		
+		  <if test="dateCreatedTo != null and dateCreatedTo != ''">
+		    AND a.date_created &lt;= #{dateCreatedTo}
+		  </if>
+		
+		  <if test="isSerialArticle != null and isSerialArticle == true">
+		    AND a.serial_article_uuid IS NOT NULL
+		  </if>
+		
+		  ORDER BY a.date_created DESC
+		  LIMIT #{size} OFFSET #{offset}
+	</select>
 
 	<select id="findSingleArticlesByTopicAndLanguage" resultMap="ArticleMapper">
 	    SELECT 
@@ -221,5 +284,4 @@
 		LIMIT #{size} OFFSET #{offset}
 	  ]]>
 	</select>
-
 </mapper>

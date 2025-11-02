@@ -5,6 +5,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.hn369.universeblog.dto.serialarticle.SerialArticleMasterSearchRequestDto;
+import com.hn369.universeblog.dto.serialarticle.SerialArticleMasterSearchResponseDto;
 import com.hn369.universeblog.dto.serialarticle.SerialArticleReadResponseDto;
 import com.hn369.universeblog.service.entity.serialarticle.SerialArticle;
 import com.hn369.universeblog.service.serialarticle.SerialArticleRepositoryIfc;
@@ -43,6 +45,13 @@ public class SerialArticleRepositoryImpl implements SerialArticleRepositoryIfc {
 	@Override
 	public List<SerialArticleReadResponseDto> findAllSerialArticles() {
 		List<SerialArticleReadResponseDto> serialArticleList = serialArticleMyBatisMapper.findAllSerialArticles();
+		return serialArticleList;
+	}
+
+	@Override
+	public List<SerialArticleMasterSearchResponseDto> searchSerialArticleMaster(
+			SerialArticleMasterSearchRequestDto searchRequestDto) {
+		List<SerialArticleMasterSearchResponseDto> serialArticleList = serialArticleMyBatisMapper.searchSerialArticleMaster(searchRequestDto);
 		return serialArticleList;
 	}
 

@@ -5,5 +5,7 @@ import com.hn369.universeblog.service.entity.article.ArticleTranslation;
 public interface ArticleTranslationRepositoryIfc {
 	
 	ArticleTranslation saveArticleTranslation(ArticleTranslation rawArticleTranslation);
+	
+	ArticleTranslation findArticleTranslationById(String articleUuid, String languageCode);
 
 }

@@ -28,5 +28,68 @@
 		select sa.serial_article_uuid, sa.serial_article_name, sa.default_language_code
 		from serial_article sa
     </select>
+    
+    <resultMap id="SerialArticleMasterSearchMapper"
+               type="com.hn369.universeblog.dto.serialarticle.SerialArticleMasterSearchResponseDto">
+        <result property="serialArticleUuid" column="serial_article_uuid"/>
+        <result property="serialArticleName" column="serial_article_name"/>
+        <result property="defaultLanguageCode" column="default_language_code"/>
+        <result property="topicUuid" column="topic_uuid"/>
+        <result property="topicName" column="topic_name"/>
+    </resultMap>
+
+    <select id="searchSerialArticleMaster"
+            parameterType="com.hn369.universeblog.dto.serialarticle.SerialArticleMasterSearchRequestDto"
+            resultMap="SerialArticleMasterSearchMapper">
+
+        SELECT 
+            sa.serial_article_uuid,
+            sa.serial_article_name,
+            sa.default_language_code,
+            t.topic_uuid,
+            t.topic_name
+        FROM serial_article sa
+        LEFT JOIN serial_article_topic sat ON sa.serial_article_uuid = sat.serial_article_uuid
+        LEFT JOIN topic t ON sat.topic_uuid = t.topic_uuid
+        WHERE 1=1
+
+        <if test="serialArticleName != null and serialArticleName != ''">
+            AND LOWER(sa.serial_article_name) LIKE LOWER(CONCAT('%', #{serialArticleName}, '%'))
+        </if>
+
+        <if test="defaultLanguageCode != null and defaultLanguageCode != ''">
+            AND sa.default_language_code = #{defaultLanguageCode}
+        </if>
+
+        <if test="topicName != null and topicName != ''">
+            AND LOWER(t.topic_name) LIKE LOWER(CONCAT('%', #{topicName}, '%'))
+        </if>
+
+        ORDER BY sa.serial_article_name ASC
+        LIMIT #{size} OFFSET #{offset}
+    </select>
+
+    <select id="countSerialArticles"
+            parameterType="com.hn369.universeblog.dto.serialarticle.SerialArticleMasterSearchRequestDto"
+            resultType="long">
+
+        SELECT COUNT(DISTINCT sa.serial_article_uuid)
+        FROM serial_article sa
+        LEFT JOIN serial_article_topic sat ON sa.serial_article_uuid = sat.serial_article_uuid
+        LEFT JOIN topic t ON sat.topic_uuid = t.topic_uuid
+        WHERE 1=1
+
+        <if test="serialArticleName != null and serialArticleName != ''">
+            AND LOWER(sa.serial_article_name) LIKE LOWER(CONCAT('%', #{serialArticleName}, '%'))
+        </if>
+
+        <if test="defaultLanguageCode != null and defaultLanguageCode != ''">
+            AND sa.default_language_code = #{defaultLanguageCode}
+        </if>
+
+        <if test="topicName != null and topicName != ''">
+            AND LOWER(t.topic_name) LIKE LOWER(CONCAT('%', #{topicName}, '%'))
+        </if>
+    </select>    
 
 </mapper>

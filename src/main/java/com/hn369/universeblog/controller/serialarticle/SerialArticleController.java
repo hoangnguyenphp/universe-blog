@@ -6,8 +6,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.hn369.universeblog.dto.serialarticle.SerialArticleMasterSearchRequestDto;
+import com.hn369.universeblog.dto.serialarticle.SerialArticleMasterSearchResponseDto;
 import com.hn369.universeblog.dto.serialarticle.SerialArticleReadResponseDto;
 import com.hn369.universeblog.service.serialarticle.SerialArticleService;
 
@@ -18,7 +21,14 @@ public class SerialArticleController {
 
 	@Autowired
 	private SerialArticleService serialArticleService;
-
+	
+	@PostMapping("/serial-articles/search-serial-article")
+	public ResponseEntity<List<SerialArticleMasterSearchResponseDto>> searchSerialArticleMaster(
+			SerialArticleMasterSearchRequestDto searchRequestDto) {
+		List<SerialArticleMasterSearchResponseDto> serialArticles = serialArticleService.searchSerialArticleMaster(searchRequestDto);
+		return ResponseEntity.ok(serialArticles);		
+	}
+	
 	@GetMapping("/serial-articles/{masterTopicUuid}/{languageCode}")
 	public ResponseEntity<List<SerialArticleReadResponseDto>> retrieveSerialArticleByMasterTopicAndLanguage(
 			@PathVariable String masterTopicUuid, @PathVariable String languageCode) {

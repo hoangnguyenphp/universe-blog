@@ -5,6 +5,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.hn369.universeblog.dto.serialarticle.SerialArticleMasterSearchRequestDto;
+import com.hn369.universeblog.dto.serialarticle.SerialArticleMasterSearchResponseDto;
 import com.hn369.universeblog.dto.serialarticle.SerialArticleReadResponseDto;
 
 @Service
@@ -26,6 +28,14 @@ public class SerialArticleService {
 	public List<SerialArticleReadResponseDto> retrieveAllSerialArticles() {
 		List<SerialArticleReadResponseDto> serialArticleList = serialArticleRepository.findAllSerialArticles();
 		return serialArticleList;
+	}
+	
+	public List<SerialArticleMasterSearchResponseDto> searchSerialArticleMaster(
+			SerialArticleMasterSearchRequestDto searchRequestDto) {
+		searchRequestDto.setOffset(searchRequestDto.getPage() * searchRequestDto.getSize());
+		List<SerialArticleMasterSearchResponseDto> serialArticles = serialArticleRepository.searchSerialArticleMaster(searchRequestDto);
+		return serialArticles;
+		
 	}
 
 }

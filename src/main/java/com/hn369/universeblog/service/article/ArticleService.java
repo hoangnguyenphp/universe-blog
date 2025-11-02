@@ -8,6 +8,8 @@ import org.springframework.stereotype.Service;
 
 import com.hn369.universeblog.dto.article.ArticleCreationRequestDto;
 import com.hn369.universeblog.dto.article.ArticleCreationResponseDto;
+import com.hn369.universeblog.dto.article.ArticleMasterSearchRequestDto;
+import com.hn369.universeblog.dto.article.ArticleMasterSearchResponseDto;
 import com.hn369.universeblog.dto.article.ArticleReadResponseDto;
 import com.hn369.universeblog.dto.article.RelatedArticleReadResponseDto;
 import com.hn369.universeblog.service.articletopic.ArticleTopicRepositoryIfc;
@@ -146,5 +148,12 @@ public class ArticleService {
 		int offset = page * size;
 		List<RelatedArticleReadResponseDto> relatedArticles = articleRepository.retrieveRelatedArticles(articleUuid, languageCode, size, offset);
 		return relatedArticles;
+	}
+	
+	public List<ArticleMasterSearchResponseDto> searchArticleMaster(
+			ArticleMasterSearchRequestDto articleMasterSearchRequestDto) {
+		articleMasterSearchRequestDto.setOffset(articleMasterSearchRequestDto.getSize() * articleMasterSearchRequestDto.getPage());
+		List<ArticleMasterSearchResponseDto> articleList = articleRepository.searchArticleMaster(articleMasterSearchRequestDto);
+		return articleList;
 	}
 } 

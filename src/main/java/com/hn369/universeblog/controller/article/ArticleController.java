@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.hn369.universeblog.dto.article.ArticleCreationRequestDto;
 import com.hn369.universeblog.dto.article.ArticleCreationResponseDto;
+import com.hn369.universeblog.dto.article.ArticleMasterSearchRequestDto;
+import com.hn369.universeblog.dto.article.ArticleMasterSearchResponseDto;
 import com.hn369.universeblog.dto.article.ArticleReadResponseDto;
 import com.hn369.universeblog.dto.article.RelatedArticleReadResponseDto;
 import com.hn369.universeblog.service.article.ArticleService;
@@ -34,6 +36,12 @@ public class ArticleController {
 		ArticleCreationResponseDto articleCreationResponseDto = articleService.createArticle(articleCreationRequestDto);
 		
 		return ResponseEntity.ok(articleCreationResponseDto);
+	}
+	
+	@PostMapping("/articles/search-article")
+	public ResponseEntity<List<ArticleMasterSearchResponseDto>> searchArticleMaster(@RequestBody ArticleMasterSearchRequestDto articleMasterSearchRequestDto) {
+		List<ArticleMasterSearchResponseDto> articles = articleService.searchArticleMaster(articleMasterSearchRequestDto);
+		return ResponseEntity.ok(articles);
 	}
 	
 	@GetMapping("/articles/{articleUuid}")
