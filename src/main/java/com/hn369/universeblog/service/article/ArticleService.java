@@ -67,7 +67,7 @@ public class ArticleService {
 				currentChapter = articleRepository.countArticleOfASerialArticle(serialArticle);
 				newArticle.setChapterId(currentChapter + 1);
 			}
-			newArticle = articleRepository.createArticle(newArticle);
+			newArticle = articleRepository.saveArticle(newArticle);
 
 			// Save article_topic
 			Topic masterTopic = topicRepository.findByTopicUuid(articleCreationRequestDto.getMasterTopicUuid());
